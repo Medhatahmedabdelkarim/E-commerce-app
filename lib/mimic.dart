@@ -41,31 +41,42 @@ class HomeScreen extends StatelessWidget{
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
-                  mainAxisSpacing: 8,
+                  mainAxisSpacing: 10,
                 ),
                 itemBuilder:(Context,position){
                   return Card(
                     margin: EdgeInsets.all(8),
                     shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8)),
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Image.asset("assets/Images/mimic.png"),
-                        Container(
-                            color: Colors.grey.withValues(alpha: 0.2),
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Sleek boxing gloves',style:TextStyle(fontWeight:FontWeight.bold),),
-                                SizedBox(height: 4,),
-                                Text('27.00')
+                    child:
+                        Column(
+                          children: [
+                            Container(
+                              height: 120,
+                              width: double.infinity,
+                              color: Colors.grey,
+                              child: Image.asset("assets/Images/mimic.png",fit: BoxFit.cover,),
+                            ),
+                            Container(
+                                color: Colors.white.withValues(alpha: 0.2),
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: EdgeInsets.all(4),
+                                  child:Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Sleek boxing gloves',style:TextStyle(fontWeight:FontWeight.bold),),
+                                    SizedBox(height: 1,),
+                                    Text('27.00')
 
-                              ],
+                                  ],
+                                ),
                             )
+
+                            )
+                          ],
                         )
-                      ],
-                    ),
+
+
                   );
                 },
 
