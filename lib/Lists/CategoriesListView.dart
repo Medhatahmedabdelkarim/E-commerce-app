@@ -1,30 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../cards/CategoryDesign.dart';
+import '../models/Category.dart';
+
 class CategoriesListView extends StatelessWidget {
   const CategoriesListView({
-    super.key,
+    super.key,required this.categories
   });
+  final List<Category>categories;
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height:150,
-        child:ListView.builder(
-            itemCount:6 ,
+        height:80,
+        child:ListView(
             scrollDirection: Axis.horizontal,
-            itemBuilder:(context,position) {
-              return Padding(
-                  padding:EdgeInsets.all(8),
-                  child:Container(
-                    height:50,
-                    width:100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(1),
-                        color: Colors.blue
-                    ),
-                  ));
-            })
+             children: [for(final category in categories)
+                      CategoriesDesign(category:category)
+               ] )
 
 
     );
