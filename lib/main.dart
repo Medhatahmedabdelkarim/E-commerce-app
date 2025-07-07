@@ -7,7 +7,7 @@ void main() {
   runApp(
     GetMaterialApp(
       home: Scaffold(
-        body: ProductDetails(),
+        body: HomeScreen(),
       ),
     )
   );

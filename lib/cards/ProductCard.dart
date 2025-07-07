@@ -1,5 +1,8 @@
+import 'package:demo_app/Screens/ProductDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../models/Product.dart';
 
@@ -17,14 +20,25 @@ class ProductCard extends StatelessWidget {
         margin: EdgeInsets.all(8),
         shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8)),
         child:
-        Column(
+        InkWell(
+            onTap: ()=>Get.to(()=>ProductDetails(product: product,),),
+            child:Column(
           children: [
+            Stack(
+              alignment: Alignment.topRight,
+                children: [
             Container(
               height: 120,
               width: double.infinity,
               color: Colors.grey,
               child: Image.asset(product.imageUrl,fit: BoxFit.cover,),
             ),
+              IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart))
+
+
+          ]
+            ),
+
             Container(
                 color: Colors.white.withValues(alpha: 0.2),
                 width: double.infinity,
@@ -35,7 +49,8 @@ class ProductCard extends StatelessWidget {
                     children: [
                       Text(product.title,style:TextStyle(fontWeight:FontWeight.bold),),
                       SizedBox(height: 1,),
-                      Text(product.price)
+                      Text(product.price),
+
 
                     ],
                   ),
@@ -44,6 +59,7 @@ class ProductCard extends StatelessWidget {
             )
           ],
         )
+    ),
 
 
     );

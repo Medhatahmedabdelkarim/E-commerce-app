@@ -8,7 +8,7 @@ class CardDesign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(child:Card(
       margin: EdgeInsets.all(8),
       shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8)),
       child: Stack(
@@ -18,7 +18,7 @@ class CardDesign extends StatelessWidget {
           Container(
               color: Colors.grey.withValues(alpha: 0.2),
               width: double.infinity,
-              child: Column(
+              child: Padding(padding: EdgeInsets.all(8),child:Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Sleek boxing gloves',style:TextStyle(fontWeight:FontWeight.bold),),
@@ -28,8 +28,9 @@ class CardDesign extends StatelessWidget {
                 ],
               )
           )
+          )
         ],
       ),
-    );
+    ));
   }
 }
