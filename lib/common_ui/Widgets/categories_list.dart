@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import '../../data/models/category.dart';
 import 'package:flutter/material.dart';
-
-import '../cards/CategoryDesign.dart';
-import '../models/Category.dart';
+import '../cards/categories_design.dart';
 
 class CategoriesListView extends StatelessWidget {
   const CategoriesListView({
