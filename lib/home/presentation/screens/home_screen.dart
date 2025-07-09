@@ -1,3 +1,7 @@
+import 'package:demo_app/cart/bloc/cart_bloc.dart';
+import 'package:demo_app/common_ui/Widgets/cart_icon_design.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../common_ui/Widgets/categories_list.dart';
 import '../../../common_ui/Widgets/products_grid.dart';
 import '../../../common_ui/cards/home_main_card.dart';
@@ -19,6 +23,9 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           title: Center(child: Text('E-commerce')),
           automaticallyImplyLeading: false,
+          actions: [
+            CartIconDesign(),
+          ],
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -80,14 +87,14 @@ class HomeScreen extends StatelessWidget {
                       price: "27.00",
                       imageUrl: "assets/Images/mimic.png",
                       description:
-                          "Modern boxing gloves include mesh palm, velcro, leather-based stitching, suspension cushioning and new padding for the boxer. The International Boxing Association approves new designs of gloves according to rules around weight and the amount of leather, padding and support allowed.",
+                      "Modern boxing gloves include mesh palm, velcro, leather-based stitching, suspension cushioning and new padding for the boxer. The International Boxing Association approves new designs of gloves according to rules around weight and the amount of leather, padding and support allowed.",
                     ),
                     Product(
                       title: "Boxing Bag",
                       price: "1000.0",
                       imageUrl: "assets/Images/boxingbag.jpg",
                       description:
-                          "A punching bag (or British English punchbag) is a sturdy bag designed to be repeatedly punched. A punching bag is usually cylindrical and filled with various materials of suitable hardness.",
+                      "A punching bag (or British English punchbag) is a sturdy bag designed to be repeatedly punched. A punching bag is usually cylindrical and filled with various materials of suitable hardness.",
                     ),
                   ],
                 ),

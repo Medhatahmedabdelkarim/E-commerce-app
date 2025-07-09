@@ -1,8 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../cart/bloc/cart_bloc.dart';
 import '../../../common_ui/Widgets/rating_bar.dart';
 import '../../../common_ui/cards/product_details_card.dart';
 import '../../../data/models/product.dart';
 import 'package:flutter/material.dart';
-
 
 class ProductDetails extends StatelessWidget {
   ProductDetails({super.key, required this.product});
@@ -31,7 +33,10 @@ class ProductDetails extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
                 SizedBox(height: 4),
-                Text(product.description, style: TextStyle(fontSize: 16,fontWeight: FontWeight.normal),),
+                Text(
+                  product.description,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                ),
                 SizedBox(height: 10),
                 Text(
                   "Price : \$${product.price}",
@@ -45,7 +50,9 @@ class ProductDetails extends StatelessWidget {
                 SizedBox(height: 8),
                 SizedBox(height: 40, child: colorsSlider()),
                 SizedBox(height: 20),
-                addToCartButton(),
+
+                addToCartButton(context),
+
                 SizedBox(height: 4),
                 buyNowButton(),
                 SizedBox(height: 8),
@@ -85,24 +92,76 @@ class ProductDetails extends StatelessWidget {
     );
   }
 
-  Container addToCartButton() {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.blue,
-      ),
-      child: TextButton(
-        onPressed: () {},
-        child: Text(
-          "Add To Cart",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: Colors.black,
-          ),
-        ),
-      ),
+  BlocBuilder addToCartButton(BuildContext context) {
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        final cartItemsBloc = context.read<CartBloc>();
+        bool check = !(state.items
+            .map((item) => item.title)
+            .contains(product.title));
+        return check
+            ? Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.blue,
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    cartItemsBloc.add(AddToCart(product));
+                  },
+                  child: Text(
+                    "Add To Cart",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(35),
+                  color: Colors.blue,
+                ),
+
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          cartItemsBloc.add(RemoveFromCart(product));
+                          if(product.count==1) {
+                            return;
+                          }
+                          else{
+                            product.count--;
+                          }
+                        },
+                        child: Icon(Icons.remove, color: Colors.white),
+                      ),
+                    ),
+                    Text(
+                      '${product.count}',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          cartItemsBloc.add(AddToCart(product));
+                          product.count++;
+                        },
+                        child: Icon(Icons.add, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+      },
     );
   }
 
