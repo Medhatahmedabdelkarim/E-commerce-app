@@ -14,8 +14,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    product.count = 1;
     final cartItemsBloc = context.read<CartBloc>();
+
     return Card(
       margin: EdgeInsets.all(8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -29,7 +29,7 @@ class ProductCard extends StatelessWidget {
                     .map((item) => item.title)
                     .contains(product.title));
                 return Stack(
-                  alignment: Alignment.bottomRight,
+                  alignment: Alignment.topRight,
                   children: [
                     Container(
                       height: 120,
@@ -49,7 +49,6 @@ class ProductCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(35),
                               color: Colors.blue,
                             ),
-
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -60,11 +59,6 @@ class ProductCard extends StatelessWidget {
                                       cartItemsBloc.add(
                                         RemoveFromCart(product),
                                       );
-                                      if (product.count == 1) {
-                                        return;
-                                      } else {
-                                        product.count--;
-                                      }
 
                                     },
                                     child: Icon(
@@ -74,7 +68,10 @@ class ProductCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${product.count}',
+                                  '${state.items.firstWhere(
+                                          (item) => item.title == product.title,
+                                      orElse: () => product
+                                  ).count}',
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 Padding(
@@ -82,7 +79,6 @@ class ProductCard extends StatelessWidget {
                                   child: GestureDetector(
                                     onTap: () {
                                       cartItemsBloc.add(AddToCart(product));
-                                      product.count++;
                                     },
                                     child: Icon(Icons.add, color: Colors.white),
                                   ),

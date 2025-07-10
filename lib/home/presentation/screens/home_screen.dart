@@ -84,14 +84,14 @@ class HomeScreen extends StatelessWidget {
                   products: [
                     Product(
                       title: "Sleek Boxing Gloves",
-                      price: "27.00",
+                      price: 27.0,
                       imageUrl: "assets/Images/mimic.png",
                       description:
                       "Modern boxing gloves include mesh palm, velcro, leather-based stitching, suspension cushioning and new padding for the boxer. The International Boxing Association approves new designs of gloves according to rules around weight and the amount of leather, padding and support allowed.",
                     ),
                     Product(
                       title: "Boxing Bag",
-                      price: "1000.0",
+                      price: 1000.0,
                       imageUrl: "assets/Images/boxingbag.jpg",
                       description:
                       "A punching bag (or British English punchbag) is a sturdy bag designed to be repeatedly punched. A punching bag is usually cylindrical and filled with various materials of suitable hardness.",

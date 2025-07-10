@@ -8,6 +8,7 @@ class ProductsGridView extends StatelessWidget {
 
   final List<Product> products;
 
+
   @override
   Widget build(BuildContext context) {
     return GridView(

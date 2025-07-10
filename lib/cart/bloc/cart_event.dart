@@ -17,5 +17,6 @@ final class RemoveFromCart extends CartEvent{
   List<Object> get props=>[product];
 
 }
+class LoadCart extends CartEvent {}
 
 

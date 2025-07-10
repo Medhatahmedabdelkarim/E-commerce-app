@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,38 +8,69 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme
-        .of(context)
-        .brightness == Brightness.dark;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('E-commerce'),
-        leading: BackButton(),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
-      ),
-      body: BlocBuilder<CartBloc, CartState>(
-        builder: (context, state) {
-          return Padding(
-            padding: EdgeInsets.all(12),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.items.length,
-              itemBuilder: (context, index) =>
-                      ListTile(
+    final cartItemsBloc = context.read<CartBloc>();
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        if (state.items.isEmpty) {
+          return Scaffold(appBar: AppBar(
+            title: Text('Shopping Cart'),
+          ),body: Center(child: Text('Cart is empty')));
+        }
+        else {
+          double sum = state.items
+              .map((item) => item.price)
+              .reduce((a, b) => a + b);
+          return
+            Scaffold(
+              appBar: AppBar(
+                title: Text('Shopping Cart'),
+                leading: BackButton(),
+              ),
+              body: cartItemCard(state, cartItemsBloc),
+              bottomNavigationBar: Padding(
+                padding: EdgeInsets.all(12),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Total : $sum'),
+                ),
+              ),
+            );
+        }
+
+      });
+  }
+
+  Padding cartItemCard(CartState state, CartBloc cartItemsBloc) {
+    return Padding(
+              padding: EdgeInsets.all(12),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: state.items.length,
+                itemBuilder: (context, index) =>
+                    Dismissible(
+                      key: UniqueKey(),
+                      onDismissed: (direction) {
+                        cartItemsBloc.add(RemoveFromCart(state.items[index]));
+                      },
+                      child: ListTile(
                         title: Text('${state.items[index].title}'),
                         subtitle: Text('${state.items[index].price}'),
-                        trailing: Text('${state.items[index].count}'),
-
-                      )
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(12),
-        child: ElevatedButton(onPressed: () {
-        }, child: Text('Checkout \$2800')),
-      ),
-    );
+                        leading: Card(
+                          margin: EdgeInsets.all(8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Image.asset(
+                            state.items[index].imageUrl,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+              ),
+            );
   }
 }
+

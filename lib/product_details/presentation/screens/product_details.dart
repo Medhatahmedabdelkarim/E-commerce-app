@@ -121,31 +121,30 @@ class ProductDetails extends StatelessWidget {
                 ),
               )
             : Container(
+                width:double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(35),
                   color: Colors.blue,
                 ),
 
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
                           cartItemsBloc.add(RemoveFromCart(product));
-                          if(product.count==1) {
-                            return;
-                          }
-                          else{
-                            product.count--;
-                          }
+
                         },
                         child: Icon(Icons.remove, color: Colors.white),
                       ),
                     ),
                     Text(
-                      '${product.count}',
+                      '${state.items.firstWhere(
+                              (item) => item.title == product.title,
+                          orElse: () => product
+                      ).count}',
                       style: TextStyle(color: Colors.white),
                     ),
                     Padding(
@@ -153,7 +152,6 @@ class ProductDetails extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {
                           cartItemsBloc.add(AddToCart(product));
-                          product.count++;
                         },
                         child: Icon(Icons.add, color: Colors.white),
                       ),
