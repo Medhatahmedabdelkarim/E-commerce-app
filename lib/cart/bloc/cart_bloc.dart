@@ -3,11 +3,15 @@ import 'package:demo_app/data/models/product.dart';
 import 'package:demo_app/services/local_storage.dart';
 import 'package:meta/meta.dart';
 
+import '../../services/local_storage.dart';
+import '../../services/service_locator.dart';
+
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   int counter = 0;
+  final LocalStorage=sl.get<LocalStorageServices>();
 
   CartBloc() : super(CartState([])) {
     on<CartEvent>(addedToCart);
@@ -39,17 +43,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
 
     emit(CartState(updatedCart));
-    await LocalStorageServices.saveCart(updatedCart);
+    await LocalStorage.saveCart(updatedCart);
   }
 
   // Load cart from SharedPreferences
   _loadCart(LoadCart event, Emitter<CartState> emit) async {
-    final cartItems = await LocalStorageServices.loadCart();
+    final cartItems = await LocalStorage.loadCart();
     emit(CartState(cartItems));
   }
 
   void _initializeCart() async {
-    final savedCart = await LocalStorageServices.loadCart();
+    final savedCart = await LocalStorage.loadCart();
     emit(CartState(savedCart));
   }
 

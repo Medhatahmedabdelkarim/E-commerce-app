@@ -6,11 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() async {
+  di.ServiceLocator();
   runApp(MultiBlocProvider(
       providers: [
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
         ),
       ],
-      child: GetMaterialApp(home: Scaffold(body: SplashScreen()))));
+      child: GetMaterialApp(debugShowCheckedModeBanner: false,home: Scaffold(body: SplashScreen()))));
 }

@@ -6,7 +6,7 @@ class LocalStorageServices {
   static const String _cartKey = 'cart_items';
 
   // Save cart items
-  static Future<void> saveCart(List<Product> cart) async {
+   Future<void> saveCart(List<Product> cart) async {
     final prefs = await SharedPreferences.getInstance();
     final List<Map<String, dynamic>> cartMapList = cart.map((p) => p.toJson()).toList();
     final String encodedCart = jsonEncode(cartMapList);
@@ -14,7 +14,7 @@ class LocalStorageServices {
   }
 
   // Load cart items
-  static Future<List<Product>> loadCart() async {
+   Future<List<Product>> loadCart() async {
     final prefs = await SharedPreferences.getInstance();
     final String? cartString = prefs.getString('cart');
     if (cartString == null) return [];

@@ -12,6 +12,7 @@ class CartIconDesign extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
+        final total = state.items.fold(0, (sum, item) => sum + item.count);
         return Stack(
           children: [
             IconButton(onPressed: () {Get.to(()=>CartScreen());}, icon: Icon(Icons.shopping_cart,)),
@@ -25,7 +26,7 @@ class CartIconDesign extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100)
                 ),
                 child: Center(
-                  child: Text('${state.items.length}', style: TextStyle(color: Colors.white),),
+                  child: Text('${total}', style: TextStyle(color: Colors.white),),
                 ),
               ),
             )

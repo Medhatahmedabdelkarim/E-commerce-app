@@ -5,7 +5,7 @@ import 'local_storage.dart';
 
 final GetIt sl = GetIt.instance;
 
-Future<void> init() async {
+Future<void> ServiceLocator() async {
   // Services
   sl.registerLazySingleton<LocalStorageServices>(() => LocalStorageServices());
 
