@@ -19,8 +19,8 @@ class CartScreen extends StatelessWidget {
         }
         else {
           double sum = state.items
-              .map((item) => item.price)
-              .reduce((a, b) => a + b);
+              .fold<double>(
+              0, (a, b) => a + b.price*b.count);
           return
             Scaffold(
               appBar: AppBar(

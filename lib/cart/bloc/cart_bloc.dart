@@ -14,7 +14,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   CartBloc() : super(CartState([])) {
     on<CartEvent>(addedToCart);
-    on<LoadCart>(_loadCart);
     _initializeCart();
   }
 
@@ -42,11 +41,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     emit(CartState(updatedCart));
     await LocalStorage.saveCart(updatedCart);
-  }
-
-  _loadCart(LoadCart event, Emitter<CartState> emit) async {
-    final cartItems = await LocalStorage.loadCart();
-    emit(CartState(cartItems));
   }
 
   void _initializeCart() async {
