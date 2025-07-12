@@ -4,7 +4,6 @@ import 'package:demo_app/data/models/product.dart';
 
 class LocalStorageServices {
 
-  // Save cart items
    Future<void> saveCart(List<Product> cart) async {
     final prefs = await SharedPreferences.getInstance();
     final List<Map<String, dynamic>> cartMapList = cart.map((p) => p.toJson()).toList();
@@ -12,7 +11,6 @@ class LocalStorageServices {
     await prefs.setString('cart', encodedCart);
   }
 
-  // Load cart items
    Future<List<Product>> loadCart() async {
     final prefs = await SharedPreferences.getInstance();
     final String? cartString = prefs.getString('cart');

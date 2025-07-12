@@ -19,7 +19,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
 
-  // Your existing method with SharedPreferences added
   Future<void> addedToCart(CartEvent event, Emitter<CartState> emit) async {
     final updatedCart = List<Product>.from(state.items);
 
@@ -45,7 +44,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     await LocalStorage.saveCart(updatedCart);
   }
 
-  // Load cart from SharedPreferences
   _loadCart(LoadCart event, Emitter<CartState> emit) async {
     final cartItems = await LocalStorage.loadCart();
     emit(CartState(cartItems));
