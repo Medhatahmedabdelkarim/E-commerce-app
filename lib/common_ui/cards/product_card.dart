@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import '../../data/models/product.dart';
 import '../../product_details/presentation/screens/product_details.dart';
+import '../../services/service_locator.dart';
+import '../Widgets/IncDec.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
@@ -14,8 +16,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartItemsBloc = context.read<CartBloc>();
-
+    var cartItemsBloc = context.read<CartBloc>();
     return Card(
       margin: EdgeInsets.all(8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -44,48 +45,7 @@ class ProductCard extends StatelessWidget {
                             },
                             icon: Icon(Icons.shopping_cart),
                           )
-                        : Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(35),
-                              color: Colors.blue,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      cartItemsBloc.add(
-                                        RemoveFromCart(product),
-                                      );
-
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  '${state.items.firstWhere(
-                                          (item) => item.title == product.title,
-                                      orElse: () => product
-                                  ).count}',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      cartItemsBloc.add(AddToCart(product));
-                                    },
-                                    child: Icon(Icons.add, color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        : IncDec(cartItemsBloc: cartItemsBloc, product: product),
                   ],
                 );
               },
@@ -118,3 +78,5 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
+

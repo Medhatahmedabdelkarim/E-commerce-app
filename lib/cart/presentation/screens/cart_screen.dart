@@ -1,3 +1,4 @@
+import 'package:demo_app/common_ui/Widgets/IncDec.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,25 +48,20 @@ class CartScreen extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: state.items.length,
                 itemBuilder: (context, index) =>
-                    Dismissible(
-                      key: UniqueKey(),
-                      onDismissed: (direction) {
-                        cartItemsBloc.add(RemoveFromCart(state.items[index]));
-                      },
-                      child: ListTile(
-                        title: Text('${state.items[index].title}'),
-                        subtitle: Text('${state.items[index].price}'),
-                        leading: Card(
-                          margin: EdgeInsets.all(8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Image.asset(
-                            state.items[index].imageUrl,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          ),
+                    ListTile(
+                      title: Text('${state.items[index].title}'),
+                      subtitle: Text('${state.items[index].price}'),
+                      trailing: IncDec(cartItemsBloc: cartItemsBloc, product: state.items[index]),
+                      leading: Card(
+                        margin: EdgeInsets.all(8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Image.asset(
+                          state.items[index].imageUrl,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
