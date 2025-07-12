@@ -3,7 +3,6 @@ import 'package:demo_app/data/models/product.dart';
 import 'package:demo_app/services/local_storage.dart';
 import 'package:meta/meta.dart';
 
-import '../../services/local_storage.dart';
 import '../../services/service_locator.dart';
 
 part 'cart_event.dart';

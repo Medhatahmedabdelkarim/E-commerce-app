@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:demo_app/data/models/product.dart';
 
 class LocalStorageServices {
-  static const String _cartKey = 'cart_items';
 
   // Save cart items
    Future<void> saveCart(List<Product> cart) async {
