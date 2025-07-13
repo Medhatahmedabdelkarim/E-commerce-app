@@ -5,12 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
+import 'navigation/navigation_bloc.dart';
+
 void main() async {
   di.ServiceLocator();
   runApp(MultiBlocProvider(
       providers: [
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
+        ),
+        BlocProvider<NavigationBloc>(
+          create: (BuildContext context) => NavigationBloc(),
         ),
       ],
       child: GetMaterialApp(debugShowCheckedModeBanner: false,home: Scaffold(body: SplashScreen()))));

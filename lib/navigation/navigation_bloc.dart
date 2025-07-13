@@ -1,0 +1,16 @@
+import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
+
+part 'navigation_event.dart';
+part 'navigation_state.dart';
+
+class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
+  NavigationBloc() : super(NavigationInitial(tabIndex: 0)) {
+    on<NavigationEvent>((event,emit) {
+      if (event is OnChangeNav) {
+        emit(NavigationInitial(tabIndex:event.tabIndex));
+      }
+    } );
+  }
+  }
+
