@@ -6,30 +6,34 @@ import 'package:meta/meta.dart';
 import '../../services/service_locator.dart';
 
 part 'cart_event.dart';
+
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   int counter = 0;
-  final LocalStorage=sl.get<LocalStorageServices>();
+  final LocalStorage = sl.get<LocalStorageServices>();
 
   CartBloc() : super(CartState([])) {
     on<CartEvent>(addedToCart);
     _initializeCart();
   }
 
-
   Future<void> addedToCart(CartEvent event, Emitter<CartState> emit) async {
     final updatedCart = List<Product>.from(state.items);
 
     if (event is AddToCart) {
-      final index = updatedCart.indexWhere((p) => p.title == event.product.title);
+      final index = updatedCart.indexWhere(
+        (p) => p.title == event.product.title,
+      );
       if (index != -1) {
         updatedCart[index].count += 1;
       } else {
         updatedCart.add(event.product..count = 1);
       }
     } else if (event is RemoveFromCart) {
-      final index = updatedCart.indexWhere((p) => p.title == event.product.title);
+      final index = updatedCart.indexWhere(
+        (p) => p.title == event.product.title,
+      );
       if (index != -1) {
         if (updatedCart[index].count > 1) {
           updatedCart[index].count -= 1;
@@ -37,6 +41,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           updatedCart.removeAt(index);
         }
       }
+    } else if (event is ClearCart) {
+      updatedCart.clear();
+      for (var i in updatedCart) {
+        i.count = 0;
+      }
+    } else if (event is DeleteSpecificProduct) {
+      final index = updatedCart.indexWhere(
+        (p) => p.title == event.product.title,
+      );
+      updatedCart.removeAt(index);
     }
 
     emit(CartState(updatedCart));
@@ -47,6 +61,4 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final savedCart = await LocalStorage.loadCart();
     emit(CartState(savedCart));
   }
-
-
 }
