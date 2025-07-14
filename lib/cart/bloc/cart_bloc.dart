@@ -42,6 +42,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartState(updatedCart));
     await LocalStorage.saveCart(updatedCart);
   }
+  double totalPrice(){
+    return state.items
+        .fold<double>(
+        0, (a, b) => a + b.price*b.count);
+  }
 
   void _initializeCart() async {
     final savedCart = await LocalStorage.loadCart();

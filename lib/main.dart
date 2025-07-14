@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
-import 'navigation/navigation_bloc.dart';
+import 'navigation/Bloc/navigation_bloc.dart';
 
 void main() async {
   di.ServiceLocator();

@@ -1,4 +1,4 @@
-import 'package:demo_app/common_ui/Widgets/navigation_menu.dart';
+import 'package:demo_app/navigation/presentation/screens/navigation_menu.dart';
 
 import '../../../home/presentation/screens/home_screen.dart';
 import 'package:get/get.dart';

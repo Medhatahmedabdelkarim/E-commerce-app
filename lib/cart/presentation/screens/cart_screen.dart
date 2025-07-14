@@ -18,14 +18,11 @@ class CartScreen extends StatelessWidget {
           ),body: Center(child: Text('Cart is empty')));
         }
         else {
-          double sum = state.items
-              .fold<double>(
-              0, (a, b) => a + b.price*b.count);
+          double sum = cartItemsBloc.totalPrice();
           return
             Scaffold(
               appBar: AppBar(
                 title: Text('Shopping Cart'),
-                leading: BackButton(),
               ),
               body: cartItemCard(state, cartItemsBloc),
               bottomNavigationBar: Padding(

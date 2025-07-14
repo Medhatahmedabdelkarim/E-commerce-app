@@ -1,4 +1,5 @@
 import 'package:demo_app/cart/presentation/screens/cart_screen.dart';
+import 'package:demo_app/profile/presentation/screens/profile_screen.dart';
 import 'package:demo_app/splash_screen/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,16 +10,16 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import '../../cart/bloc/cart_bloc.dart';
-import '../../home/presentation/screens/home_screen.dart';
-import '../../navigation/navigation_bloc.dart';
+import '../../../cart/bloc/cart_bloc.dart';
+import '../../../home/presentation/screens/home_screen.dart';
+import '../../Bloc/navigation_bloc.dart';
 
 class NavigationMenu extends StatelessWidget {
   NavigationMenu({super.key});
   @override
   Widget build(BuildContext context) {
     final NavigationBlocs = context.read<NavigationBloc>();
-    final screens=[HomeScreen(),CartScreen()];
+    final screens=[HomeScreen(),CartScreen(),ProfileScreen()];
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return Scaffold(
@@ -35,9 +36,10 @@ class NavigationMenu extends StatelessWidget {
                   padding: EdgeInsets.all(16),
                   gap: 8,
                   tabs: [
-                    GButton(icon: Icons.home, text: 'home',),
-                    GButton(icon: Icons.shopping_cart, text: 'cart',),
-                    GButton(icon: Icons.favorite_border, text: 'favorite',),
+                    GButton(icon: Icons.home, text: 'Home',),
+                    GButton(icon: Icons.shopping_cart, text: 'Cart',),
+                    GButton(icon: Icons.person, text: 'Profile',),
+                    GButton(icon: Icons.favorite, text: 'Favorite',),
 
                   ]),
             ),
