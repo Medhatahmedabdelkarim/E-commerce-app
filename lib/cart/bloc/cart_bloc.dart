@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:demo_app/constants/constants.dart';
 import 'package:demo_app/data/models/product.dart';
 import 'package:demo_app/services/local_storage.dart';
 import 'package:meta/meta.dart';
@@ -14,56 +15,60 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final LocalStorage = sl.get<LocalStorageServices>();
 
   CartBloc() : super(CartState([])) {
-    on<CartEvent>(addedToCart);
+    on<AddToCart>(_onAddToCart);
+    on<RemoveFromCart>(_onRemoveFromCart);
+    on<ClearCart>(_onClearCart);
+    on<DeleteSpecificProduct>(_onDeleteSpecificProduct);
     _initializeCart();
   }
 
-  Future<void> addedToCart(CartEvent event, Emitter<CartState> emit) async {
+  _onAddToCart(event, emit) async {
     final updatedCart = List<Product>.from(state.items);
-
-    if (event is AddToCart) {
-      final index = updatedCart.indexWhere(
-        (p) => p.title == event.product.title,
-      );
-      if (index != -1) {
-        updatedCart[index].count += 1;
-      } else {
-        updatedCart.add(event.product..count = 1);
-      }
-    } else if (event is RemoveFromCart) {
-      final index = updatedCart.indexWhere(
-        (p) => p.title == event.product.title,
-      );
-      if (index != -1) {
-        if (updatedCart[index].count > 1) {
-          updatedCart[index].count -= 1;
-        } else {
-          updatedCart.removeAt(index);
-        }
-      }
-    } else if (event is ClearCart) {
-      updatedCart.clear();
-      for (var i in updatedCart) {
-        i.count = 0;
-      }
-    } else if (event is DeleteSpecificProduct) {
-      final index = updatedCart.indexWhere(
-        (p) => p.title == event.product.title,
-      );
-      updatedCart.removeAt(index);
+    final index = updatedCart.indexWhere((p) => p.title == event.product.title);
+    if (index != -1) {
+      updatedCart[index].count += 1;
+    } else {
+      updatedCart.add(event.product..count = 1);
     }
-
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(updatedCart);
+    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
   }
-  double totalPrice(){
-    return state.items
-        .fold<double>(
-        0, (a, b) => a + b.price*b.count);
+
+  _onRemoveFromCart(event, emit) async {
+    final updatedCart = List<Product>.from(state.items);
+    final index = updatedCart.indexWhere((p) => p.title == event.product.title);
+    if (index != -1) {
+      if (updatedCart[index].count > 1) {
+        updatedCart[index].count -= 1;
+      } else {
+        updatedCart.removeAt(index);
+      }
+    }
+    emit(CartState(updatedCart));
+    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
+  }
+
+  _onClearCart(event, emit) async {
+    final updatedCart = List<Product>.from(state.items);
+    updatedCart.clear();
+    emit(CartState(updatedCart));
+    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
+  }
+
+  _onDeleteSpecificProduct(event, emit) async {
+    final updatedCart = List<Product>.from(state.items);
+    final index = updatedCart.indexWhere((p) => p.title == event.product.title);
+    updatedCart.removeAt(index);
+    emit(CartState(updatedCart));
+    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
+  }
+
+  double totalPrice() {
+    return state.items.fold<double>(0, (a, b) => a + b.price * b.count);
   }
 
   void _initializeCart() async {
-    final savedCart = await LocalStorage.loadCart();
+    final savedCart = await LocalStorage.loadCart(Constants.cartItemsKey,Constants.cartKey);
     emit(CartState(savedCart));
   }
 }

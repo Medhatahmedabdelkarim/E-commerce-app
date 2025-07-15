@@ -14,6 +14,7 @@ class CategoriesListView extends StatelessWidget {
     return Container(
         height:80,
         child:ListView(
+          shrinkWrap: true,
             scrollDirection: Axis.horizontal,
              children: [for(final category in categories)
                       CategoriesDesign(category:category)

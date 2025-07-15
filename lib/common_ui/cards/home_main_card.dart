@@ -5,34 +5,12 @@ class CardDesign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Image.asset("assets/Images/mimic.png"),
-          Container(
-            color: Colors.grey.withValues(alpha: 0.2),
+    return Padding(
+      padding: EdgeInsets.only(top:13,bottom: 13),
+      child: Container(
             width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Sleek boxing gloves',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    'This modern boxing glove combines style and efficiency with its unique design and top notch...',
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+            height: 214,
+            child: Image.asset("assets/Images/Picture swipe.png",fit: BoxFit.cover,),
       ),
     );
   }

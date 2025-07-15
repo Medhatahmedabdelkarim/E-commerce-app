@@ -7,7 +7,7 @@ final GetIt sl = GetIt.instance;
 
 Future<void> ServiceLocator() async {
   // Services
-  sl.registerLazySingleton<LocalStorageServices>(() => LocalStorageServices());
+  sl.registerLazySingleton<LocalStorageServices>(() => LocalStorageServices(itemsKey: '', key: ''));
 
   // BLoCs
   sl.registerFactory<CartBloc>(() => CartBloc());

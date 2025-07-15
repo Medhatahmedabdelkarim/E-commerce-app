@@ -9,10 +9,14 @@ class IncDec extends StatelessWidget {
     super.key,
     required this.cartItemsBloc,
     required this.product,
+    required this.onDecPressed,
+    required this.onIncPressed
   });
 
   final CartBloc cartItemsBloc;
   final Product product;
+  final VoidCallback onIncPressed;
+  final VoidCallback onDecPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +31,7 @@ class IncDec extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: () {
-                cartItemsBloc.add(
-                  RemoveFromCart(product),
-                );
-
-              },
+              onTap:onDecPressed,
               child: Icon(
                 Icons.remove,
                 color: Colors.white,
@@ -49,9 +48,7 @@ class IncDec extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: () {
-                cartItemsBloc.add(AddToCart(product));
-              },
+              onTap:onIncPressed,
               child: Icon(Icons.add, color: Colors.white),
             ),
           ),

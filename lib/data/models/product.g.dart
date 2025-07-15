@@ -19,7 +19,7 @@ class ProductAdapter extends TypeAdapter<Product> {
     return Product(
       title: fields[1] as String,
       price: fields[2] as double,
-      imageUrl: fields[0] as String,
+      images: fields[0] as List<String>,
       description: fields[3] as String,
       count: fields[4] as int,
     );
@@ -30,7 +30,7 @@ class ProductAdapter extends TypeAdapter<Product> {
     writer
       ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.imageUrl)
+      ..write(obj.images)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)

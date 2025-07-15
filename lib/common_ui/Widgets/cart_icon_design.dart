@@ -14,19 +14,21 @@ class CartIconDesign extends StatelessWidget {
       builder: (context, state) {
         final total = state.items.fold(0, (sum, item) => sum + item.count);
         return Stack(
+          alignment: Alignment.bottomRight,
           children: [
-            IconButton(onPressed: () {Get.to(()=>CartScreen());}, icon: Icon(Icons.shopping_cart,)),
+            IconButton(onPressed: () {Get.to(()=>CartScreen());}, icon: Icon(Icons.shopping_bag_outlined,),iconSize:24,),
             Positioned(
-              right: 0,
+              right: 6,
+              bottom: 6,
               child: Container(
                 width: 18,
                 height: 18,
                 decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(100)
+                    color: Color.fromRGBO( 0,25,255,1),
+                    borderRadius: BorderRadius.circular(20)
                 ),
                 child: Center(
-                  child: Text('${total}', style: TextStyle(color: Colors.white),),
+                  child: Text('${total}', style: TextStyle(color: Colors.white,fontSize: 10,fontWeight: FontWeight.w600),),
                 ),
               ),
             )

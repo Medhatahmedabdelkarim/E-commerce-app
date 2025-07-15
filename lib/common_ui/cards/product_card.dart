@@ -17,66 +17,66 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cartItemsBloc = context.read<CartBloc>();
-    return Card(
-      margin: EdgeInsets.all(8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () => Get.to(() => ProductDetails(product: product)),
-        child: Column(
-          children: [
-            BlocBuilder<CartBloc, CartState>(
-              builder: (context, state) {
-                bool check = !(state.items
-                    .map((item) => item.title)
-                    .contains(product.title));
-                return Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Container(
-                      height: 120,
-                      width: double.infinity,
-                      color: Colors.grey,
-                      child: Image.asset(product.imageUrl, fit: BoxFit.cover),
-                    ),
-                    check
-                        ? IconButton(
-                            onPressed: () {
-                              cartItemsBloc.add(AddToCart(product));
-                            },
-                            icon: Icon(Icons.shopping_cart),
-                          )
-                        : IncDec(cartItemsBloc: cartItemsBloc, product: product),
-                  ],
-                );
-              },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            width: 200,
+            height: 189,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              color: Color.fromRGBO(248, 249, 254, 1),
             ),
-
-            Container(
-              color: Colors.white.withValues(alpha: 0.2),
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.title,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 1),
-                    Text(
-                      '\$${product.price}',
-                      style: TextStyle(fontWeight: FontWeight.normal),
-                    ),
-                  ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 200,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Image.network(product.images[0], fit: BoxFit.cover,),
                 ),
-              ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      width: 200,
+                      height: 69,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${product.title}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '\$${product.price}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
-
-

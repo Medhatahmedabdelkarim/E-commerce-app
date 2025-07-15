@@ -6,12 +6,12 @@ class Product {
   Product({
     required this.title,
     required this.price,
-    required this.imageUrl,
+    required this.images,
     required this.description,
     this.count = 1,
   });
   @HiveField(0)
-  final String imageUrl;
+  List<String> images;
   @HiveField(1)
   String title;
   @HiveField(2)
@@ -27,7 +27,9 @@ class Product {
       price: (parsedJson['price'] is int)
           ? (parsedJson['price'] as int).toDouble()
           : (parsedJson['price'] as num?)?.toDouble() ?? 0.0,
-      imageUrl: parsedJson['imageUrl'] ?? "",
+      images:  (parsedJson['images'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList() ?? [],
       description: parsedJson['description'] ?? "",
       count: parsedJson['count'] ?? 0,
     );
@@ -37,7 +39,7 @@ class Product {
     return {
       "title": title,
       "price": price,
-      "imageUrl": imageUrl,
+      "images": images,
       "description": description,
       "count": count,
     };

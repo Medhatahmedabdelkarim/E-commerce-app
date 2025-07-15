@@ -1,3 +1,5 @@
+import 'package:demo_app/common_ui/Widgets/sizes_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cart/bloc/cart_bloc.dart';
@@ -14,57 +16,63 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('E-commerce'),
-        leading: BackButton(),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
-      ),
       body: ListView(
         children: [
-          Padding(
-            padding: EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProductDetailsCard(product: product),
-                SizedBox(height: 8),
-                Text(
-                  product.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  product.description,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Price : \$${product.price}",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                ),
-                SizedBox(height: 12),
-                Text(
-                  "Colors : ",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                SizedBox(height: 8),
-                SizedBox(height: 40, child: colorsSlider()),
-                SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProductDetailsCard(product: product),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          product.title,
+                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                        ),
+                        IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.heart,color:Color.fromRGBO(0, 25, 255, 1),size:24))
+                      ],
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      "\$ ${product.price}",
+                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      product.description,
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      "Size",
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                    ),
+                    SizedBox(height: 8),
+                    SizedBox(height: 40, child: SizesWidget()),
+                    SizedBox(height: 32),
 
-                addToCartButton(context),
+                    Text(
+                      "Colors : ",
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                    ),
+                    SizedBox(height: 8),
+                    SizedBox(height: 40, child: colorsSlider()),
+                    SizedBox(height: 32),
 
-                SizedBox(height: 4),
-                buyNowButton(),
-                SizedBox(height: 8),
-                Divider(),
-                Text(
-                  " Reviews (300)",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    addToCartButton(context),
+                  ],
                 ),
-                SizedBox(height: 4),
-                RatingsBar(),
-              ],
-            ),
+              ),
+
+              SizedBox(height: 4),
+
+
+            ],
           ),
         ],
       ),
@@ -103,28 +111,34 @@ class ProductDetails extends StatelessWidget {
             ? Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(12),
+                  color: Color.fromRGBO(0, 25, 255, 1),
                 ),
                 child: TextButton(
                   onPressed: () {
                     cartItemsBloc.add(AddToCart(product));
                   },
-                  child: Text(
-                    "Add To Cart",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add,color: Colors.white,),
+                      Text(
+                        " Add To Cart",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )
             : Container(
                 width:double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35),
-                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(12),
+                  color: Color.fromRGBO(0, 25, 255, 1),
                 ),
 
                 child: Row(
@@ -167,14 +181,34 @@ class ProductDetails extends StatelessWidget {
     return ListView(
       scrollDirection: Axis.horizontal,
       children: [
-        Container(
-          width: 40,
-          height: 30,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: Colors.red,
+        Stack(
+          children:[ Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+              ),
+            child: CircleAvatar(
+            backgroundColor:Colors.pink,
+            ),
           ),
-        ),
+            Positioned(
+              right: 0,
+              top: -1,
+              child: Container(
+                width: 18,
+                height: 18,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO( 0,25,255,1),
+                    borderRadius: BorderRadius.circular(20),
+                    border:Border.all(color: Colors.white,
+                        width: 2.0)
+                ),
+                child: Center(
+                  child: Text('✓', style: TextStyle(color: Colors.white,fontSize: 10,fontWeight: FontWeight.w600),),
+                ),
+              ),
+            )
+        ]),
         SizedBox(width: 5),
         Container(
           width: 40,

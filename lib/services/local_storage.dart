@@ -3,17 +3,20 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:demo_app/data/models/product.dart';
 
 class LocalStorageServices {
-  static const key = 'cart_items';
+  LocalStorageServices({required this.itemsKey,required this.key});
+  String itemsKey;
+  String key;
 
-  Future<void> saveCart(List<Product> cart) async {
-    final cartBox=await Hive.openBox('cart');
+
+  Future<void> saveCart(List<Product> cart,String itemsKey,String key) async {
+    final cartBox=await Hive.openBox(key);
     final List<Map<String, dynamic>>cartData = cart.map((product) => product.toJson()).toList();
     final String encodedCart = jsonEncode(cartData);
-    await cartBox.put(key, encodedCart);
+    await cartBox.put(itemsKey, encodedCart);
   }
-  Future<List<Product>> loadCart() async {
-    final cartBox=await Hive.openBox('cart');
-    final cartData = cartBox.get(key);
+  Future<List<Product>> loadCart(String itemsKey,String key) async {
+    final cartBox=await Hive.openBox(key);
+    final cartData = cartBox.get(itemsKey);
     final List<dynamic> decoded = jsonDecode(cartData);
     return decoded.map((item) => Product.fromJson(item)).toList();
   }

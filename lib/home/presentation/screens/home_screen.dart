@@ -1,5 +1,7 @@
 import 'package:demo_app/cart/bloc/cart_bloc.dart';
 import 'package:demo_app/common_ui/Widgets/cart_icon_design.dart';
+import 'package:demo_app/services/api_services.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common_ui/Widgets/categories_list.dart';
@@ -17,94 +19,73 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(6),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text('E-commerce')),
-          automaticallyImplyLeading: false,
-          actions: [
-            CartIconDesign(),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 12),
-                Text('Featured', style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 12),
-                CardDesign(),
+        title: Image.asset("assets/Images/CasaForsa.png"),
+        centerTitle: true,
+        leading: IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.search)),
+        automaticallyImplyLeading: false,
+        actions: [
+          Row(children: [
+          IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.heart)),
+          CartIconDesign(),
+      ]),
 
-                SizedBox(height: 12),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 12),
+            SizedBox(height: 12),
+            CardDesign(),
 
-                Text(
-                  'Categories',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 12),
-                CategoriesListView(
-                  categories: [
-                    Category(
-                      imageUrl: "assets/Images/cleaning.png",
-                      title: "Cleaning",
-                    ),
-                    Category(
-                      imageUrl: "assets/Images/appliances.png",
-                      title: "Appliances",
-                    ),
-                    Category(
-                      imageUrl: "assets/Images/shopping.png",
-                      title: "Shopping",
-                    ),
-                    Category(
-                      imageUrl: "assets/Images/clothes.png",
-                      title: "Clothes",
-                    ),
-                    Category(
-                      imageUrl: "assets/Images/sports.png",
-                      title: "Sports",
-                    ),
-                    Category(
-                      imageUrl: "assets/Images/self-care.png",
-                      title: "Self-Care",
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-                Text(
-                  'All Products',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 12),
-                ProductsGridView(
-                  products: [
-                    Product(
-                      title: "Sleek Boxing Gloves",
-                      price: 27.0,
-                      imageUrl: "assets/Images/mimic.png",
-                      description:
-                      "Modern boxing gloves include mesh palm, velcro, leather-based stitching, suspension cushioning and new padding for the boxer. The International Boxing Association approves new designs of gloves according to rules around weight and the amount of leather, padding and support allowed.",
-                    ),
-                    Product(
-                      title: "Boxing Bag",
-                      price: 1000.0,
-                      imageUrl: "assets/Images/boxingbag.jpg",
-                      description:
-                      "A punching bag (or British English punchbag) is a sturdy bag designed to be repeatedly punched. A punching bag is usually cylindrical and filled with various materials of suitable hardness.",
-                    ),
-                  ],
-                ),
-              ],
+
+            Padding(
+              padding: EdgeInsets.only(top: 16,right: 16,bottom: 16,left: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'All Products',
+                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 14),
+                      ),
+                      TextButton(onPressed: (){}, child: Text('See more',style: TextStyle(color: Color.fromRGBO( 0,25,255,1),fontWeight: FontWeight.w600,fontSize: 12),))
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  _body(),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
+
   }
+
+}
+FutureBuilder _body(){
+  final apiService=ApiService(Dio(BaseOptions(contentType: "application/json")));
+  return FutureBuilder(future: apiService.getProduct(), builder: (context,snapshot){
+    if(snapshot.connectionState==ConnectionState.done){
+      final List<Product>products=snapshot.data!;
+      return _products(products);
+    }
+    else{
+      return Center(child: CircularProgressIndicator(),);
+    }
+  });
+}
+Widget _products(List<Product>products){
+  return ProductsGridView(products: products);
 }
 
 
