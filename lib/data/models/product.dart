@@ -1,5 +1,7 @@
 import 'dart:convert';
-
+import 'package:hive_flutter/adapters.dart';
+part 'product.g.dart';
+@HiveType(typeId: 0)
 class Product {
   Product({
     required this.title,
@@ -8,11 +10,15 @@ class Product {
     required this.description,
     this.count = 1,
   });
-
+  @HiveField(0)
   final String imageUrl;
+  @HiveField(1)
   String title;
+  @HiveField(2)
   double price;
+  @HiveField(3)
   String description;
+  @HiveField(4)
   int count;
 
   factory Product.fromJson(Map<String, dynamic> parsedJson) {

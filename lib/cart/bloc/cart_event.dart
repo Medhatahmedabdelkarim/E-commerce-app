@@ -17,5 +17,13 @@ final class RemoveFromCart extends CartEvent{
   List<Object> get props=>[product];
 
 }
+final class DeleteSpecificProduct extends CartEvent{
+  final Product product;
+  DeleteSpecificProduct(this.product);
+
+  List<Object> get props=>[product];
+}
+
+final class ClearCart extends CartEvent{}
 
 
