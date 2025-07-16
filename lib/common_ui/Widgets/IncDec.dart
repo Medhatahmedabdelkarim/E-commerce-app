@@ -21,20 +21,24 @@ class IncDec extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(35),
-        color: Colors.blue,
-      ),
+      width: 75,
+      height: 32,
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: EdgeInsets.all(8.0),
+          Container(
+            height: 24,
+            width: 24,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(35),
+              color: Color.fromRGBO( 229,232,255,1),
+            ),
             child: GestureDetector(
               onTap:onDecPressed,
               child: Icon(
                 Icons.remove,
-                color: Colors.white,
+                color: Color.fromRGBO( 0,25,255,1),
+                size: 20,
               ),
             ),
           ),
@@ -43,13 +47,18 @@ class IncDec extends StatelessWidget {
                     (item) => item.title == product.title,
                 orElse: () => product
             ).count}',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
+          Container(
+            height: 24,
+            width: 24,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(35),
+              color: Color.fromRGBO( 229,232,255,1),
+            ),
             child: GestureDetector(
               onTap:onIncPressed,
-              child: Icon(Icons.add, color: Colors.white),
+              child: Icon(Icons.add, color: Color.fromRGBO( 0,25,255,1),size: 20,),
             ),
           ),
         ],

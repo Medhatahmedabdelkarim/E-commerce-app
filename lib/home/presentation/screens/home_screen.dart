@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 
 import '../../../data/models/product.dart';
 
-
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
@@ -24,14 +23,31 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Image.asset("assets/Images/CasaForsa.png"),
         centerTitle: true,
-        leading: IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.search)),
+        leading: GestureDetector(
+          child: Container(
+            height: 36,
+            width: 36,
+            child: Image.asset('assets/Images/Search.png'),
+          ),
+        ),
+
         automaticallyImplyLeading: false,
         actions: [
-          Row(children: [
-          IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.heart)),
-          CartIconDesign(),
-      ]),
-
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Row(
+              children: [
+                GestureDetector(
+                  child: Container(
+                    height: 36,
+                    width: 36,
+                    child: Image.asset('assets/Images/Heart Outlined.png'),
+                  ),
+                ),
+                CartIconDesign(),
+              ],
+            ),
+          ),
         ],
       ),
       backgroundColor: Colors.white,
@@ -40,12 +56,14 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 12),
-            SizedBox(height: 12),
             CardDesign(),
 
-
             Padding(
-              padding: EdgeInsets.only(top: 16,right: 16,bottom: 16,left: 16),
+              padding: EdgeInsets.only(
+                right: 16,
+                bottom: 16,
+                left: 16,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,13 +71,25 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'All Products',
-                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 14),
+                        '    All Products',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
                       ),
-                      TextButton(onPressed: (){}, child: Text('See more',style: TextStyle(color: Color.fromRGBO( 0,25,255,1),fontWeight: FontWeight.w600,fontSize: 12),))
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'See more',
+                          style: TextStyle(
+                            color: Color.fromRGBO(0, 25, 255, 1),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: 12),
                   _body(),
                 ],
               ),
@@ -68,24 +98,26 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-
   }
+}
 
+FutureBuilder _body() {
+  final apiService = ApiService(
+    Dio(BaseOptions(contentType: "application/json")),
+  );
+  return FutureBuilder(
+    future: apiService.getProduct(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) {
+        final List<Product> products = snapshot.data!;
+        return _products(products);
+      } else {
+        return Center(child: CircularProgressIndicator());
+      }
+    },
+  );
 }
-FutureBuilder _body(){
-  final apiService=ApiService(Dio(BaseOptions(contentType: "application/json")));
-  return FutureBuilder(future: apiService.getProduct(), builder: (context,snapshot){
-    if(snapshot.connectionState==ConnectionState.done){
-      final List<Product>products=snapshot.data!;
-      return _products(products);
-    }
-    else{
-      return Center(child: CircularProgressIndicator(),);
-    }
-  });
-}
-Widget _products(List<Product>products){
+
+Widget _products(List<Product> products) {
   return ProductsGridView(products: products);
 }
-
-

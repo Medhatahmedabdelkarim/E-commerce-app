@@ -23,7 +23,7 @@ class SizesWidget extends StatelessWidget{
           SizedBox(width: 8),
           Container(
             width: 72,
-            height: 12,
+            height: 24,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Color.fromRGBO( 229,232,255,1),

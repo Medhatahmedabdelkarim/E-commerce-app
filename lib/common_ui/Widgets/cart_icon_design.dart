@@ -16,20 +16,16 @@ class CartIconDesign extends StatelessWidget {
         return Stack(
           alignment: Alignment.bottomRight,
           children: [
-            IconButton(onPressed: () {Get.to(()=>CartScreen());}, icon: Icon(Icons.shopping_bag_outlined,),iconSize:24,),
-            Positioned(
-              right: 6,
-              bottom: 6,
-              child: Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO( 0,25,255,1),
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                child: Center(
-                  child: Text('${total}', style: TextStyle(color: Colors.white,fontSize: 10,fontWeight: FontWeight.w600),),
-                ),
+            GestureDetector(onTap:()=>Get.to(()=>CartScreen()),child: Container(height:36,width:36,child: Image.asset('assets/Images/Shopping Bag Outlined.png'),),),
+            Container(
+              width: 18,
+              height: 18,
+              decoration: BoxDecoration(
+                  color: Color.fromRGBO( 0,25,255,1),
+                  borderRadius: BorderRadius.circular(20)
+              ),
+              child: Center(
+                child: Text('${total}', style: TextStyle(color: Colors.white,fontSize: 10,fontWeight: FontWeight.w600),),
               ),
             )
           ],

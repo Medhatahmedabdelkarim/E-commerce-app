@@ -10,4 +10,7 @@ part 'api_services.g.dart';
      @GET('products')
      Future<List<Product>> getProduct();
 
+     @GET('products/{id}')
+     Future<Product> getProductById(@Path("id") int id);
+
 }

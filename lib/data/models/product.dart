@@ -4,6 +4,7 @@ part 'product.g.dart';
 @HiveType(typeId: 0)
 class Product {
   Product({
+    required this.id,
     required this.title,
     required this.price,
     required this.images,
@@ -20,9 +21,12 @@ class Product {
   String description;
   @HiveField(4)
   int count;
+  @HiveField(5)
+  int id;
 
   factory Product.fromJson(Map<String, dynamic> parsedJson) {
     return Product(
+      id: parsedJson['id'] ?? 0,
       title: parsedJson['title'] ?? "",
       price: (parsedJson['price'] is int)
           ? (parsedJson['price'] as int).toDouble()
@@ -37,6 +41,7 @@ class Product {
 
   Map<String, dynamic> toJson() {
     return {
+      "id":id,
       "title": title,
       "price": price,
       "images": images,

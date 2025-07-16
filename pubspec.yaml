@@ -93,6 +93,12 @@ flutter:
      - assets/Images/UserIcon.png
      - assets/Images/CasaForsa.png
      - assets/Images/Picture swipe.png
+     - assets/Images/Heart Outlined.png
+     - assets/Images/Shopping Bag Outlined.png
+     - assets/Images/Search.png
+     - assets/Images/Badge.png
+     - assets/Images/Colours.png
+     - assets/Images/Colours (1).png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

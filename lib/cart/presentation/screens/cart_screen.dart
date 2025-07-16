@@ -17,14 +17,23 @@ class CartScreen extends StatelessWidget {
       builder: (context, state) {
         if (state.items.isEmpty) {
           return Scaffold(
-            appBar: AppBar(title: Text('Shopping Cart')),
+            appBar: AppBar(
+              title: Text(
+                'Your Bag',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              centerTitle: true,
+            ),
             body: Center(child: Text('Cart is empty')),
           );
         } else {
-          double sum = cartItemsBloc.totalPrice();
           return Scaffold(
             appBar: AppBar(
-              title: Text('Shopping Cart'),
+              title: Text(
+                'Your Bag',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              centerTitle: true,
               actions: [
                 IconButton(
                   onPressed: () {
@@ -35,30 +44,52 @@ class CartScreen extends StatelessWidget {
               ],
             ),
             body: cartItemCard(state, cartItemsBloc),
-            bottomNavigationBar: Padding(
-              padding: EdgeInsets.all(12),
-              child: Container(
-                width: double.infinity,
-                height: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(80),
-                  color: Colors.blue,
-                ),
-                child: Center(
-                  child: TextButton(
-                    style: TextButton.styleFrom(foregroundColor: Colors.black),
-                    child: Text(
-                      'Total Price : \$$sum',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+            bottomNavigationBar: Container(
+              height: 136,
+              child: Padding(
+                padding: const EdgeInsets.only(top:12,right: 24,left: 24),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top:8.0,bottom: 8,right: 12,left: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Total',style: TextStyle(fontSize: 14),),
+                          Text('\$ ${cartItemsBloc.totalPrice()}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800),)
+                        ],
                       ),
                     ),
-                    onPressed: () {},
-                  ),
+                    SizedBox(height: 16,),
+                    Container(
+                      width: 360,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Color.fromRGBO(0, 25, 255, 1),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Checkout",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ),
+            )
           );
         }
       },
@@ -67,45 +98,77 @@ class CartScreen extends StatelessWidget {
 
   Padding cartItemCard(CartState state, CartBloc cartItemsBloc) {
     return Padding(
-      padding: EdgeInsets.all(12),
-      child: ListView.builder(
+      padding: EdgeInsets.only(top:24,bottom: 12,right: 24,left: 24),
+      child: ListView.separated(
+        separatorBuilder: (context,index)=>Padding(
+          padding: const EdgeInsets.only(top:12,bottom: 12),
+          child: Divider(color: Color.fromRGBO(212,214,221, 1),thickness: 0.5,),
+        ),
         shrinkWrap: true,
         itemCount: state.items.length,
-        itemBuilder: (context, index) => ListTile(
-          title: Text('${state.items[index].title}'),
-          subtitle: Text(
-            '\$${state.items[index].price * state.items[index].count}',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        itemBuilder: (context, index) => Container(
+          width: MediaQuery.of(context).size.width * 0.94,
+          height: 100,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+          ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            width: 90,
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              color: Color.fromRGBO(248, 249, 254, 1),
+            ),
+                child: Image.network(
+                    state.items[index].images[0],
+                    fit: BoxFit.cover
+                ),
+              ),
           ),
-          trailing: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IncDec(cartItemsBloc: cartItemsBloc, product: state.items[index],onDecPressed: (){cartItemsBloc.add(RemoveFromCart(state.items[index]));},onIncPressed: (){cartItemsBloc.add(AddToCart(state.items[index]));},),
-              IconButton(
-                onPressed: () {
-                  cartItemsBloc.add(DeleteSpecificProduct(state.items[index]));
-                },
-                icon: Icon(Icons.delete),
+              Padding(
+                padding: EdgeInsets.only(top: 12,bottom: 12,right: 16,left: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: 237,
+                      child: Text(
+                        '${state.items[index].title}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Blue / 160x200',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 9,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IncDec(cartItemsBloc: cartItemsBloc, product: state.items[index], onDecPressed: (){cartItemsBloc.add(RemoveFromCart(state.items[index]));}, onIncPressed: (){cartItemsBloc.add(AddToCart(state.items[index]));}),
+                        SizedBox(width:115),
+                        Text(
+                          '\$ ${state.items[index].price * state.items[index].count}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                  ],
+                ),
               ),
             ],
-          ),
-          leading: InkWell(
-            onTap: () {
-              Get.to(() => ProductDetails(product: state.items[index]));
-            },
-            child: Card(
-              margin: EdgeInsets.all(8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Image.network(
-                state.items[index].images[0],
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-            ),
           ),
         ),
       ),
