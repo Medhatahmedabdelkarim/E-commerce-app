@@ -31,7 +31,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       updatedCart.add(event.product..count = 1);
     }
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
+    await LocalStorage.saveCart(
+      updatedCart,
+      Constants.cartItemsKey,
+      Constants.cartKey,
+    );
   }
 
   _onRemoveFromCart(event, emit) async {
@@ -45,14 +49,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
+    await LocalStorage.saveCart(
+      updatedCart,
+      Constants.cartItemsKey,
+      Constants.cartKey,
+    );
   }
 
   _onClearCart(event, emit) async {
     final updatedCart = List<Product>.from(state.items);
     updatedCart.clear();
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
+    await LocalStorage.saveCart(
+      updatedCart,
+      Constants.cartItemsKey,
+      Constants.cartKey,
+    );
   }
 
   _onDeleteSpecificProduct(event, emit) async {
@@ -60,7 +72,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final index = updatedCart.indexWhere((p) => p.title == event.product.title);
     updatedCart.removeAt(index);
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(updatedCart,Constants.cartItemsKey,Constants.cartKey);
+    await LocalStorage.saveCart(
+      updatedCart,
+      Constants.cartItemsKey,
+      Constants.cartKey,
+    );
   }
 
   double totalPrice() {
@@ -68,7 +84,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _initializeCart() async {
-    final savedCart = await LocalStorage.loadCart(Constants.cartItemsKey,Constants.cartKey);
+    final savedCart = await LocalStorage.loadCart(
+      Constants.cartItemsKey,
+      Constants.cartKey,
+    );
     emit(CartState(savedCart));
   }
 }

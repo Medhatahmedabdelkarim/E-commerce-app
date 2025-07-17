@@ -11,6 +11,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../cart/bloc/cart_bloc.dart';
+import '../../../constants/colors.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import '../../Bloc/navigation_bloc.dart';
 
@@ -23,26 +24,34 @@ class NavigationMenu extends StatelessWidget {
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return Scaffold(
-          bottomNavigationBar: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: GNav(
-                  onTabChange:(index){
-                    NavigationBlocs.add(OnChangeNav(tabIndex: index));
-                  },
-                  activeColor: Colors.black,
-                  tabBackgroundColor: Colors.blue.shade500,
-                  padding: EdgeInsets.all(16),
-                  gap: 8,
-                  tabs: [
-                    GButton(icon: Icons.home, text: 'Home',),
-                    GButton(icon: Icons.shopping_cart, text: 'Cart',),
-                    GButton(icon: Icons.person, text: 'Profile',),
-                    GButton(icon: Icons.favorite, text: 'Favorite',),
-
-                  ]),
-            ),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: state.tabIndex,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            selectedIconTheme:IconThemeData(color:EColors.primary) ,
+            selectedItemColor: Colors.black,
+            unselectedIconTheme: IconThemeData(color: Colors.grey),
+            unselectedItemColor: Colors.grey,
+            showSelectedLabels: true,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.explore),
+                label: 'Explore',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Search',
+              ),
+              BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage('assets/Images/Icon.png')),
+                label: 'Categories',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+            onTap: (index){NavigationBlocs.add(OnChangeNav(tabIndex: index));},
           ),
           body:screens[state.tabIndex] ,
         );

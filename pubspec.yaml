@@ -99,6 +99,7 @@ flutter:
      - assets/Images/Badge.png
      - assets/Images/Colours.png
      - assets/Images/Colours (1).png
+     - assets/Images/Icon.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

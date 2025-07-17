@@ -1,15 +1,10 @@
 import 'package:demo_app/common_ui/Widgets/IncDec.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
-import '../../../product_details/presentation/screens/product_details.dart';
 import '../../bloc/cart_bloc.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final cartItemsBloc = context.read<CartBloc>();
@@ -44,56 +39,60 @@ class CartScreen extends StatelessWidget {
               ],
             ),
             body: cartItemCard(state, cartItemsBloc),
-            bottomNavigationBar: Container(
-              height: 136,
-              child: Padding(
-                padding: const EdgeInsets.only(top:12,right: 24,left: 24),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top:8.0,bottom: 8,right: 12,left: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Total',style: TextStyle(fontSize: 14),),
-                          Text('\$ ${cartItemsBloc.totalPrice()}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800),)
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16,),
-                    Container(
-                      width: 360,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Color.fromRGBO(0, 25, 255, 1),
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Checkout",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )
+            bottomNavigationBar: cartNavigationBar(cartItemsBloc)
           );
         }
       },
     );
+  }
+
+  Container cartNavigationBar(CartBloc cartItemsBloc) {
+    return Container(
+            height: 136,
+            child: Padding(
+              padding: const EdgeInsets.only(top:12,right: 24,left: 24),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top:8.0,bottom: 8,right: 12,left: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Total',style: TextStyle(fontSize: 14),),
+                        Text('\$ ${cartItemsBloc.totalPrice()}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800),)
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 16,),
+                  Container(
+                    width: 360,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Color.fromRGBO(0, 25, 255, 1),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Checkout",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
   }
 
   Padding cartItemCard(CartState state, CartBloc cartItemsBloc) {
@@ -154,7 +153,7 @@ class CartScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IncDec(cartItemsBloc: cartItemsBloc, product: state.items[index], onDecPressed: (){cartItemsBloc.add(RemoveFromCart(state.items[index]));}, onIncPressed: (){cartItemsBloc.add(AddToCart(state.items[index]));}),
-                        SizedBox(width:115),
+                        SizedBox(width:108),
                         Text(
                           '\$ ${state.items[index].price * state.items[index].count}',
                           style: TextStyle(

@@ -6,15 +6,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cart/bloc/cart_bloc.dart';
 import '../../../common_ui/Widgets/rating_bar.dart';
 import '../../../common_ui/cards/product_details_card.dart';
+import '../../../constants/colors.dart';
 import '../../../data/models/product.dart';
 import 'package:flutter/material.dart';
 
 import '../../../services/api_services.dart';
 
-class ProductDetails extends StatelessWidget {
+class ProductDetails extends StatefulWidget {
   ProductDetails({super.key, required this.productId});
 
   final int productId;
+
+  @override
+  State<ProductDetails> createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
   final apiService = ApiService(
     Dio(BaseOptions(contentType: "application/json")),
   );
@@ -23,7 +30,7 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<Product>(
-        future: apiService.getProductById(productId),
+        future: apiService.getProductById(widget.productId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -39,7 +46,7 @@ class ProductDetails extends StatelessWidget {
       ),
     );
   }
-
+  bool flag=true;
   Widget ProductDetailsUi(BuildContext context, Product product) {
     return ListView(
       children: [
@@ -55,21 +62,30 @@ class ProductDetails extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        product.title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18,
+                      Expanded(
+                        child: Text(
+                          product.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 18,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          maxLines: 1,
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            flag = !flag;
+                          });
+                        },
                         icon: Icon(
-                          CupertinoIcons.heart,
-                          color: Color.fromRGBO(0, 25, 255, 1),
+                          flag?
+                          CupertinoIcons.heart:Icons.favorite,
+                          color: EColors.primary,
                           size: 24,
+                        )
                         ),
-                      ),
                     ],
                   ),
                   SizedBox(height: 4),
@@ -88,11 +104,12 @@ class ProductDetails extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                   ),
                   SizedBox(height: 8),
-                  SizedBox(height: 32, child: Row(
-                    children: [
-                      Image.asset('assets/Images/Colours (1).png'),
-                    ],
-                  )),
+                  SizedBox(
+                    height: 32,
+                    child: Row(
+                      children: [Image.asset('assets/Images/Colours (1).png')],
+                    ),
+                  ),
                   SizedBox(height: 32),
 
                   Text(
@@ -100,7 +117,10 @@ class ProductDetails extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                   ),
                   SizedBox(height: 8),
-                  SizedBox(height: 32, child: Image.asset('assets/Images/Colours.png'),),
+                  SizedBox(
+                    height: 32,
+                    child: Image.asset('assets/Images/Colours.png'),
+                  ),
                   SizedBox(height: 40),
 
                   addToCartButton(context, product),
@@ -115,7 +135,6 @@ class ProductDetails extends StatelessWidget {
     );
   }
 }
-
 Container buyNowButton() {
   return Container(
     width: double.infinity,
@@ -149,7 +168,7 @@ BlocBuilder addToCartButton(BuildContext context, Product product) {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Color.fromRGBO(0, 25, 255, 1),
+                color: EColors.primary,
               ),
               child: TextButton(
                 onPressed: () {
@@ -175,7 +194,7 @@ BlocBuilder addToCartButton(BuildContext context, Product product) {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Color.fromRGBO(0, 25, 255, 1),
+                color: EColors.primary,
               ),
 
               child: Row(
@@ -243,30 +262,21 @@ ListView colorsSlider() {
       Container(
         width: 32,
         height: 32,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.blue,
-        ),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
         child: CircleAvatar(backgroundColor: Colors.pink),
       ),
       SizedBox(width: 5),
       Container(
         width: 32,
         height: 32,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.blue,
-        ),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
         child: CircleAvatar(backgroundColor: Colors.pink),
       ),
       SizedBox(width: 5),
       Container(
         width: 32,
         height: 32,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.blue,
-        ),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
         child: CircleAvatar(backgroundColor: Colors.pink),
       ),
     ],

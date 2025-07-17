@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../cart/bloc/cart_bloc.dart';
+import '../../constants/colors.dart';
 import '../../data/models/product.dart';
 
 class IncDec extends StatelessWidget {
@@ -37,7 +38,7 @@ class IncDec extends StatelessWidget {
               onTap:onDecPressed,
               child: Icon(
                 Icons.remove,
-                color: Color.fromRGBO( 0,25,255,1),
+                color: EColors.primary,
                 size: 20,
               ),
             ),
@@ -58,7 +59,7 @@ class IncDec extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap:onIncPressed,
-              child: Icon(Icons.add, color: Color.fromRGBO( 0,25,255,1),size: 20,),
+              child: Icon(Icons.add, color: EColors.primary,size: 20,),
             ),
           ),
         ],

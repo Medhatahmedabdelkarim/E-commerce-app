@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../constants/colors.dart';
+
 class CartIconDesign extends StatelessWidget {
   CartIconDesign({super.key});
 
@@ -21,7 +23,7 @@ class CartIconDesign extends StatelessWidget {
               width: 18,
               height: 18,
               decoration: BoxDecoration(
-                  color: Color.fromRGBO( 0,25,255,1),
+                  color: EColors.primary,
                   borderRadius: BorderRadius.circular(20)
               ),
               child: Center(

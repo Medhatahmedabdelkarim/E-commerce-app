@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:hive_flutter/adapters.dart';
+
 part 'product.g.dart';
+
 @HiveType(typeId: 0)
 class Product {
   Product({
@@ -11,6 +13,7 @@ class Product {
     required this.description,
     this.count = 1,
   });
+
   @HiveField(0)
   List<String> images;
   @HiveField(1)
@@ -31,9 +34,11 @@ class Product {
       price: (parsedJson['price'] is int)
           ? (parsedJson['price'] as int).toDouble()
           : (parsedJson['price'] as num?)?.toDouble() ?? 0.0,
-      images:  (parsedJson['images'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ?? [],
+      images:
+          (parsedJson['images'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
       description: parsedJson['description'] ?? "",
       count: parsedJson['count'] ?? 0,
     );
@@ -41,7 +46,7 @@ class Product {
 
   Map<String, dynamic> toJson() {
     return {
-      "id":id,
+      "id": id,
       "title": title,
       "price": price,
       "images": images,

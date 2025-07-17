@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/colors.dart';
+
 class SizesWidget extends StatelessWidget{
   SizesWidget({super.key});
   @override
@@ -15,7 +17,7 @@ class SizesWidget extends StatelessWidget{
             height: 24,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: Color.fromRGBO( 0,25,255,1),
+              color: EColors.primary,
             ),
             child: Center(child: Text('160x200',style: TextStyle(color: Colors.white,fontSize: 10),),
           ),

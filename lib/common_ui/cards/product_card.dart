@@ -18,7 +18,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var cartItemsBloc = context.read<CartBloc>();
     return Padding(
-      padding: const EdgeInsets.only(left: 8,right: 8,bottom: 8),
+      padding: const EdgeInsets.only(right: 12,bottom: 8),
       child: InkWell(
         onTap: () => Get.to(() => ProductDetails(productId: product.id)),
         child: ClipRRect(
