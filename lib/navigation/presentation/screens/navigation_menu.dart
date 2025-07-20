@@ -1,4 +1,6 @@
 import 'package:demo_app/cart/presentation/screens/cart_screen.dart';
+import 'package:demo_app/categories/presentation/screens/categories_main_screen.dart';
+import 'package:demo_app/common_ui/Widgets/home_app_bar.dart';
 import 'package:demo_app/profile/presentation/screens/profile_screen.dart';
 import 'package:demo_app/splash_screen/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +22,11 @@ class NavigationMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NavigationBlocs = context.read<NavigationBloc>();
-    final screens=[HomeScreen(),CartScreen(),ProfileScreen()];
+    final screens=[HomeScreen(),CartScreen(),CategoriesMainScreen()];
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return Scaffold(
+          appBar: HomeAppBar(),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: state.tabIndex,
             type: BottomNavigationBarType.fixed,

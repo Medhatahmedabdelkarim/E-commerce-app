@@ -100,6 +100,15 @@ flutter:
      - assets/Images/Colours.png
      - assets/Images/Colours (1).png
      - assets/Images/Icon.png
+     - assets/Images/bedroom.jpg
+     - assets/Images/Kitchen.jpg
+     - assets/Images/livingroom.jpg
+     - assets/Images/Office.jpg
+     - assets/Images/Left Button.png
+     - assets/Images/Icon (1).png
+     - assets/Images/Arrow Down.png
+     - assets/Images/Filter.png
+     - assets/Images/jordan_Luka.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
