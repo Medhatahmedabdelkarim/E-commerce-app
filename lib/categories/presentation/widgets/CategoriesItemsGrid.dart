@@ -16,7 +16,7 @@ class CategoriesItemsGrid extends StatelessWidget{
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
           crossAxisCount: 2,
-          mainAxisExtent: 241,
+          mainAxisExtent: 253,
         ),
         children: [
           CategoryProductCard()
