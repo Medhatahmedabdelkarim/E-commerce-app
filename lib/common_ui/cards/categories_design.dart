@@ -21,14 +21,14 @@ class CategoriesDesign extends StatelessWidget {
               onTap: () {},
               child: Center(
                 child: Image(
-                  image: AssetImage(category.imageUrl),
+                  image: Image.network(category.image).image,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
           SizedBox(height: 4),
-          Text(category.title, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(category.name, style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
     );

@@ -138,6 +138,8 @@ class CartScreen extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 12,
+                          overflow: TextOverflow.ellipsis,
+
                         ),
                       ),
                     ),

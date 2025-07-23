@@ -1,10 +1,17 @@
 import 'package:demo_app/categories/presentation/widgets/category_grid_item.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/models/category.dart';
+import '../../../services/api_services.dart';
+import '../widgets/categories_grid_view.dart';
+
 class CategoriesMainScreen extends StatelessWidget{
   CategoriesMainScreen({super.key});
-
+  final apiService = ApiService(
+    Dio(BaseOptions(contentType: "application/json")),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,18 +26,21 @@ class CategoriesMainScreen extends StatelessWidget{
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(16),
-              child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  crossAxisCount: 2,
-                ),
-                children: [
-                  CategoryGridItem(categoryImage: "assets/Images/Office.jpg",title: "Office",),
-                  CategoryGridItem(categoryImage: "assets/Images/livingroom.jpg",title: "Living Room"),
-                  CategoryGridItem(categoryImage: "assets/Images/Kitchen.jpg",title: "Kitchen"),
-                  CategoryGridItem(categoryImage: "assets/Images/bedroom.jpg",title: "Bedroom"),
-                ],),
+              child: FutureBuilder(
+                future: apiService.getCategory(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("Error: ${snapshot.error}"));
+                  } else if (!snapshot.hasData) {
+                    return Center(child: Text("Product not found"));
+                  } else {
+                    final List<Category>categories = snapshot.data!;
+                    return CategoriesGridView(categories: categories);
+                  }
+                },
+              ),
             ),
           ),
         ],
@@ -39,3 +49,4 @@ class CategoriesMainScreen extends StatelessWidget{
   }
 
 }
+
