@@ -7,7 +7,8 @@ import '../widgets/CategoriesItemsGrid.dart';
 import '../widgets/CategoryItemAppBar.dart';
 
 class CategoryItemsScreen extends StatelessWidget{
-  CategoryItemsScreen({super.key});
+  CategoryItemsScreen({super.key,required this.categoryId});
+  final int categoryId;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class CategoryItemsScreen extends StatelessWidget{
               ],
             ),
           ),
-          CategoriesItemsGrid(),
+          CategoriesItemsGrid(categoryId:categoryId ,),
         ],
       ),
     );

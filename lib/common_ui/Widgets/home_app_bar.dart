@@ -1,5 +1,8 @@
+import 'package:demo_app/Search/presentation/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'cart_icon_design.dart';
 
@@ -18,7 +21,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Container(
           height: 36,
           width: 36,
-          child: Image.asset('assets/Images/Search.png'),
+          child: GestureDetector(onTap:()=> Get.to(()=>SearchScreen()),child: ImageIcon(AssetImage('assets/Images/Search.png'))),
         ),
       ),
 

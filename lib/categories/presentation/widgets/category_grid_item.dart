@@ -15,7 +15,7 @@ final Category category;
 Widget build(BuildContext context){
 return InkWell(
     borderRadius:BorderRadius.circular(16),
-    onTap: ()=>Get.to(()=>CategoryItemsScreen()),
+    onTap: ()=>Get.to(()=>CategoryItemsScreen(categoryId: category.id,)),
     child: Container(
         padding:EdgeInsets.all(16),
         decoration: BoxDecoration(

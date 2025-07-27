@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../Search/presentation/search_delegate.dart';
 import '../../../common_ui/Widgets/cart_icon_design.dart';
 import '../../../constants/colors.dart';
 
@@ -26,14 +27,25 @@ class CategoryItemAppbar extends StatelessWidget implements PreferredSizeWidget 
                   borderRadius: BorderRadius.circular(24),
                   color: Color.fromRGBO( 229,232,255,1),
                 ),
-                child: TextField(
-                  decoration: InputDecoration(
-                      hint: Padding(
-                        padding: const EdgeInsets.only(left:16,bottom:4,top:12),
-                        child: Row(children: [ImageIcon(AssetImage("assets/Images/Search.png"),size: 16,),SizedBox(width: 16,),Text('Search',style: TextStyle(fontSize: 14),)]),
-                      ),
-                      border: InputBorder.none
+                child: SearchBar(
+                  elevation: WidgetStatePropertyAll<double>(0),
+                  leading: ImageIcon(AssetImage('assets/Images/Search.png')),
+                  hintText: 'Search',
+                  hintStyle: WidgetStateProperty.resolveWith<TextStyle?>(
+                        (Set<WidgetState> states) {
+                      return TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.0,
+                      );
+                    },
                   ),
+                  onTap: () async {
+                    await showSearch(
+                      context: context,
+                      delegate: CustomSearchDelegate(),
+                    );
+                  },
                 ),
               ),
 

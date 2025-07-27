@@ -1,21 +1,27 @@
 // import '../../product_details/presentation/product_details.dart';
 import 'package:demo_app/cart/bloc/cart_bloc.dart';
+import 'package:demo_app/categories/presentation/widgets/IncDecCategoryProduct.dart';
+import 'package:demo_app/common_ui/Widgets/IncDec.dart';
 import 'package:demo_app/common_ui/Widgets/circular_icon.dart';
+import 'package:demo_app/product_details/presentation/screens/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/colors.dart';
+import '../../../data/models/product.dart';
 
 class CategoryProductCard extends StatelessWidget {
-  const CategoryProductCard({super.key});
+  const CategoryProductCard({super.key, required this.product});
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 12, bottom: 8),
       child: InkWell(
-        onTap: () {},
+        onTap: () {Get.to(()=>ProductDetails(productId: product.id));},
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: Container(
@@ -36,8 +42,8 @@ class CategoryProductCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: Image.asset(
-                        "assets/Images/jordan_Luka.jpg",
+                      child: Image.network(
+                        product.images[0],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -45,15 +51,15 @@ class CategoryProductCard extends StatelessWidget {
                       top: 12,
                       right: 7.5,
                       child: GestureDetector(
-                          child: Container(
-                            height: 20,
-                            width: 20,
-                            child: Image.asset(
-                              'assets/Images/Heart Outlined.png',
-                              color: EColors.primary,
-                            ),
+                        child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            'assets/Images/Heart Outlined.png',
+                            color: EColors.primary,
                           ),
                         ),
+                      ),
                     ),
                   ],
                 ),
@@ -67,7 +73,7 @@ class CategoryProductCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Jordan Luka 1',
+                            product.title,
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -77,34 +83,57 @@ class CategoryProductCard extends StatelessWidget {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            '\$ 2000.0',
+                            '\$ ${product.price}',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          SizedBox(height: 16,),
-                          Container(
-                            width: 133.5,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: EColors.primary,
-                                width: 1.5,
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Add to Cart',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: EColors.primary,
-                                ),
-                              ),
-                            ),
+                          SizedBox(height: 16),
+                          BlocBuilder<CartBloc, CartState>(
+                            builder: (context, state) {
+                              final cartItemsBloc = context.read<CartBloc>();
+                              bool check = !(state.items
+                                  .map((item) => item.id)
+                                  .contains(product.id));
+                              return check
+                                  ? Container(
+                                      width: 133.5,
+                                      height: 36,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: EColors.primary,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          cartItemsBloc.add(AddToCart(product));
+                                        },
+                                        child: Text(
+                                          'Add to Cart',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            color: EColors.primary,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : IncDecCategoryproduct(
+                                      cartItemsBloc: cartItemsBloc,
+                                      product: product,
+                                      onDecPressed: () {
+                                        cartItemsBloc.add(
+                                          RemoveFromCart(product),
+                                        );
+                                      },
+                                      onIncPressed: () {
+                                        cartItemsBloc.add(AddToCart(product));
+                                      },
+                                    );
+                            },
                           ),
                         ],
                       ),

@@ -18,4 +18,11 @@ abstract class ApiService {
 
   @GET('products/{id}')
   Future<Product> getProductById(@Path("id") int id);
+
+  @GET('categories/{id}')
+  Future<Category> getCategoryById(@Path("id") int id);
+
+
+  @GET('categories/{id}/products')
+  Future<List<Product>> getCategoryProducts(@Path("id") int id);
 }
