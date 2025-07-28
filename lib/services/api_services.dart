@@ -22,7 +22,9 @@ abstract class ApiService {
   @GET('categories/{id}')
   Future<Category> getCategoryById(@Path("id") int id);
 
-
   @GET('categories/{id}/products')
   Future<List<Product>> getCategoryProducts(@Path("id") int id);
+
+  @GET("products/")
+  Future<List<Product>> searchProducts(@Query("title") String title);
 }

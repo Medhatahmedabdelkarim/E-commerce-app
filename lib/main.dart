@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import 'Search/presentation/manager/search_bloc.dart';
 import 'navigation/Bloc/navigation_bloc.dart';
 
 void main() async {
@@ -14,14 +15,21 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
   await Hive.openBox('cart');
-  runApp(MultiBlocProvider(
+  runApp(
+    MultiBlocProvider(
       providers: [
-        BlocProvider<CartBloc>(
-          create: (BuildContext context) => CartBloc(),
-        ),
+        BlocProvider<CartBloc>(create: (BuildContext context) => CartBloc()),
         BlocProvider<NavigationBloc>(
           create: (BuildContext context) => NavigationBloc(),
         ),
+        BlocProvider<SearchBloc>(
+          create: (BuildContext context) => SearchBloc(),
+        ),
       ],
-      child: GetMaterialApp(debugShowCheckedModeBanner: false,home: Scaffold(body: SplashScreen()))));
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(body: SplashScreen()),
+      ),
+    ),
+  );
 }
