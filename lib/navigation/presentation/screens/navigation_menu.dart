@@ -32,7 +32,6 @@ class NavigationMenu extends StatelessWidget {
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: HomeAppBar(),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: state.tabIndex,
             type: BottomNavigationBarType.fixed,

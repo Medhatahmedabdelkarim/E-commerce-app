@@ -12,10 +12,6 @@ class SearchItemsGrid extends StatelessWidget {
 
   final List<Product> products;
 
-  final apiService = ApiService(
-    Dio(BaseOptions(contentType: "application/json")),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Expanded(

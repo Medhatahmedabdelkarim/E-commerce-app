@@ -8,6 +8,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'Search/presentation/manager/search_bloc.dart';
+import 'common_ui/manager/product_bloc.dart';
 import 'navigation/Bloc/navigation_bloc.dart';
 
 void main() async {
@@ -24,6 +25,9 @@ void main() async {
         ),
         BlocProvider<SearchBloc>(
           create: (BuildContext context) => SearchBloc(),
+        ),
+        BlocProvider<ProductBloc>(
+          create: (BuildContext context) => ProductBloc(),
         ),
       ],
       child: GetMaterialApp(

@@ -1,4 +1,5 @@
 import 'package:demo_app/categories/presentation/widgets/category_grid_item.dart';
+import 'package:demo_app/common_ui/Widgets/home_app_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class CategoriesMainScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: HomeAppBar(),
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

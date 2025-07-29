@@ -49,7 +49,6 @@ class SearchAppbar extends StatelessWidget implements PreferredSizeWidget {
                 },
                 elevation: WidgetStatePropertyAll<double>(0),
                 leading: ImageIcon(AssetImage('assets/Images/Search.png')),
-                autoFocus: true,
                 hintText: 'Search',
                 hintStyle: WidgetStateProperty.resolveWith<TextStyle?>((
                   Set<WidgetState> states,
