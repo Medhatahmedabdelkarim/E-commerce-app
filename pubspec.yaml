@@ -49,6 +49,7 @@ dependencies:
   retrofit: ^4.6.0
   dio: ^5.8.0+1
   dots_indicator: ^4.0.1
+  filter_list: ^1.0.3
 
 
 

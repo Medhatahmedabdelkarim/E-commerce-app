@@ -9,12 +9,13 @@ import '../../../product_details/presentation/screens/product_details.dart';
 import '../manager/search_bloc.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key});
+  SearchScreen({super.key,required this.fromNavMenu});
+  final bool fromNavMenu;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppbar(),
+      appBar: SearchAppbar(fromNavMenu:fromNavMenu ,),
       body: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
           if (state is SearchLoaded && state.submitted) {

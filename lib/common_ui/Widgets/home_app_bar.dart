@@ -21,7 +21,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Container(
           height: 36,
           width: 36,
-          child: GestureDetector(onTap:()=> Get.to(()=>SearchScreen()),child: ImageIcon(AssetImage('assets/Images/Search.png'))),
+          child: GestureDetector(onTap:()=> Get.to(()=>SearchScreen(fromNavMenu: false,)),child: ImageIcon(AssetImage('assets/Images/Search.png'))),
         ),
       ),
 

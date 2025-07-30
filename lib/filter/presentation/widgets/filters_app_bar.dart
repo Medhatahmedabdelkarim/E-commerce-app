@@ -15,12 +15,12 @@ class FiltersAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      title: Text('Filter',style: TextStyle(fontSize: 14),),
+      title: Text('Filter',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w700),),
       centerTitle: true,
       leadingWidth: 120,
       leading: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: GestureDetector(onTap:(){},child: Text('Cancel',style: TextStyle(fontSize: 12,color: EColors.primary,fontWeight: FontWeight.w600),)),
+        child: GestureDetector(onTap:()=>Get.back(),child: Text('Cancel',style: TextStyle(fontSize: 12,color: EColors.primary,fontWeight: FontWeight.w600),)),
       ),
 
       automaticallyImplyLeading: false,

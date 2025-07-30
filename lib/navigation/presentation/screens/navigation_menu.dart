@@ -26,7 +26,7 @@ class NavigationMenu extends StatelessWidget {
     final NavigationBlocs = context.read<NavigationBloc>();
     final screens = [
       HomeScreen(),
-      SearchDestScreen(products: []),
+      SearchDestScreen(products: [],fromNavMenu: true,),
       CategoriesMainScreen(),
     ];
     return BlocBuilder<NavigationBloc, NavigationState>(

@@ -44,7 +44,7 @@ class CategoryItemAppbar extends StatelessWidget
                   );
                 }),
                 onTap: () {
-                  Get.to(() => SearchScreen());
+                  Get.to(() => SearchScreen(fromNavMenu: true,));
                 },
               ),
             ),

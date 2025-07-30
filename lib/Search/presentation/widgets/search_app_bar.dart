@@ -4,11 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../../constants/colors.dart';
+import '../../../navigation/Bloc/navigation_bloc.dart';
 import '../manager/search_bloc.dart';
+import '../screens/search_dest_screen.dart';
 import '../screens/search_screen.dart';
 
 class SearchAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const SearchAppbar({super.key});
+  const SearchAppbar({super.key, required this.fromNavMenu});
+
+  final bool fromNavMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,15 @@ class SearchAppbar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             GestureDetector(
-              onTap: () => Get.back(),
+              onTap: () {
+                if (fromNavMenu) {
+                  // Navigate to Home tab in bottom navigation
+                  context.read<NavigationBloc>().add(OnChangeNav(tabIndex: 0));
+                } else {
+                  // Just pop normally
+                  Navigator.of(context).pop();
+                }
+              },
               child: ImageIcon(
                 AssetImage("assets/Images/Left Button.png"),
                 color: EColors.primary,
@@ -35,7 +47,7 @@ class SearchAppbar extends StatelessWidget implements PreferredSizeWidget {
               ),
               child: SearchBar(
                 onTap: () {
-                  Get.to(() => SearchScreen());
+                  Get.to(() => SearchScreen(fromNavMenu: fromNavMenu));
                 },
                 onChanged: (query) {
                   context.read<SearchBloc>().add(SearchQueryChanged(query));

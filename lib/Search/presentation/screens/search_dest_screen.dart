@@ -10,11 +10,14 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../../common_ui/manager/product_bloc.dart';
 import '../../../data/models/product.dart';
+import '../../../navigation/Bloc/navigation_bloc.dart';
 
 class SearchDestScreen extends StatelessWidget {
-  SearchDestScreen({super.key, required this.products});
+  SearchDestScreen({super.key, required this.products,this.fromNavMenu=false});
 
   final List<Product> products;
+  final bool fromNavMenu;
+
   final items = [
     'Sort from A-Z',
     'Sort from Z-A',
@@ -26,7 +29,7 @@ class SearchDestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: SearchAppbar(),
+      appBar: SearchAppbar(fromNavMenu: fromNavMenu,),
 
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
