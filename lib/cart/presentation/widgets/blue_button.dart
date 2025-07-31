@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BlueButton extends StatelessWidget {
-  const BlueButton({
-    super.key,
+   BlueButton({
+    super.key,required this.onPressed
   });
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class BlueButton extends StatelessWidget {
           color: Color.fromRGBO(0, 25, 255, 1),
         ),
         child: TextButton(
-          onPressed: () {},
+          onPressed:onPressed,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

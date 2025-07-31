@@ -13,10 +13,12 @@ import '../../../data/models/product.dart';
 import '../../../navigation/Bloc/navigation_bloc.dart';
 
 class SearchDestScreen extends StatelessWidget {
-  SearchDestScreen({super.key, required this.products,this.fromNavMenu=false});
+  SearchDestScreen(
+      {super.key, required this.products, this.fromNavMenu = false,});
 
   final List<Product> products;
   final bool fromNavMenu;
+
 
   final items = [
     'Sort from A-Z',
@@ -27,6 +29,10 @@ class SearchDestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProductBloc>().add(ClearProductsEvent());
+    });
+    var productBloc = context.read<ProductBloc>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: SearchAppbar(fromNavMenu: fromNavMenu,),
@@ -57,28 +63,36 @@ class SearchDestScreen extends StatelessWidget {
                         SizedBox(width: 8,),
                         SizedBox(
                           width: 40,
-                          child: DropdownButton(
-                            items: items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(items,),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              context.read<ProductBloc>().add(
-                                SortProductsEvent(products, value!),
+                          child: BlocBuilder<ProductBloc, ProductState>(
+                            builder: (context, state) {
+                              return DropdownButton(
+                                items: items.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items,),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  context.read<ProductBloc>().add(
+                                    SortProductsEvent(
+                                        state is ProductsLoaded && state.products.isNotEmpty?state.products:products,
+                                        value!),
+                                  );
+                                },
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.black),
+                                iconSize: 10,
+                                isExpanded: true,
+                                hint: Text('Sort',
+                                  style: TextStyle(color: Colors.black),),
+                                underline: Text(''),
+                                menuWidth: 120,
+                                isDense: false,
+                                icon: ImageIcon(
+                                  AssetImage("assets/Images/Arrow Down.png"),
+                                ),
                               );
                             },
-                            style: TextStyle(fontSize: 12,color: Colors.black),
-                            iconSize: 10,
-                            isExpanded: true,
-                            hint: Text('Sort',style: TextStyle(color: Colors.black),),
-                            underline: Text(''),
-                            menuWidth: 120,
-                            isDense: false,
-                            icon: ImageIcon(
-                              AssetImage("assets/Images/Arrow Down.png"),
-                            ),
                           ),
                         ),
                       ],
@@ -86,7 +100,19 @@ class SearchDestScreen extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: ()=>Get.to(()=>FiltersScreen()),
+                  onTap: () async {
+                    final filters = await Get.to(() => FiltersScreen());
+                    if (filters != null && filters is Map<String, dynamic>) {
+                      context.read<ProductBloc>().add(
+                          FilterProductsEvent(
+                            categoryId: filters['categoryId'],
+                            minPrice: (filters['minPrice'] as num?)?.toDouble(),
+                            maxPrice: (filters['maxPrice'] as num?)?.toDouble(),
+                            title: filters['title'],
+                          )
+                      );
+                    }
+                  },
                   child: Container(
                     height: 36,
                     width: 102,
@@ -129,12 +155,16 @@ class SearchDestScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          BlocBuilder<ProductBloc, ProductState>(
+          ), BlocBuilder<ProductBloc, ProductState>(
             builder: (context, state) {
-              List<Product> sortedProducts= state is ProductsLoaded? state.products :products;
-              context.read<ProductBloc>().add(ClearProductsEvent());
-              return SearchItemsGrid(products: sortedProducts);
+              final displayProducts = (state is ProductsLoaded &&
+                  state.products.isNotEmpty)
+                  ? state.products
+                  : products;
+
+              return displayProducts.isEmpty
+                  ? Center(child: Text("No products found"))
+                  : SearchItemsGrid(products: displayProducts);
             },
           ),
         ],

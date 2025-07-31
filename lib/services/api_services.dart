@@ -27,4 +27,16 @@ abstract class ApiService {
 
   @GET("products/")
   Future<List<Product>> searchProducts(@Query("title") String title);
+
+  @GET('products')
+  Future<List<Product>> getFilteredProducts({
+    @Query("categoryId") int? categoryId,
+    @Query("title") String? title,
+    @Query("price_min") double? minPrice,
+    @Query("price_max") double? maxPrice,
+  });
+
+
 }
+
+

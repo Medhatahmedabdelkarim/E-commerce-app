@@ -18,54 +18,96 @@ import '../../../constants/colors.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import '../../Bloc/navigation_bloc.dart';
 
-class NavigationMenu extends StatelessWidget {
-  NavigationMenu({super.key});
+class NavigationMenu extends StatefulWidget {
+  const NavigationMenu({super.key});
+
+  @override
+  State<NavigationMenu> createState() => _NavigationMenuState(); // This creates the state
+}
+
+class _NavigationMenuState extends State<NavigationMenu> {
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+  ];
+
+  late NavigationBloc _navigationBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _navigationBloc = context.read<NavigationBloc>();
+  }
+
+  Future<bool> _onWillPop() async {
+    final currentNavigatorState = _navigatorKeys[_navigationBloc.state.tabIndex].currentState!;
+    if (currentNavigatorState.canPop()) {
+      currentNavigatorState.pop();
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final NavigationBlocs = context.read<NavigationBloc>();
-    final screens = [
-      HomeScreen(),
-      SearchDestScreen(products: [],fromNavMenu: true,),
-      CategoriesMainScreen(),
-    ];
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
-        return Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: state.tabIndex,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
-            selectedIconTheme: IconThemeData(color: EColors.primary),
-            selectedItemColor: Colors.black,
-            unselectedIconTheme: IconThemeData(color: Colors.grey),
-            unselectedItemColor: Colors.grey,
-            showSelectedLabels: true,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.explore),
-                label: 'Explore',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Search',
-              ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(AssetImage('assets/Images/Icon.png')),
-                label: 'Categories',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
-            onTap: (index) {
-              NavigationBlocs.add(OnChangeNav(tabIndex: index));
-            },
+        return WillPopScope(
+          onWillPop: _onWillPop,
+          child: Scaffold(
+            body: IndexedStack(
+              index: state.tabIndex,
+              children: [
+                _buildNavigator(0, HomeScreen()),
+                _buildNavigator(1, SearchDestScreen(products: [], fromNavMenu: true)),
+                _buildNavigator(2, CategoriesMainScreen()),
+                _buildNavigator(3, const ProfileScreen()),
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: state.tabIndex,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.white,
+              selectedIconTheme: const IconThemeData(color: EColors.primary),
+              selectedItemColor: Colors.black,
+              unselectedIconTheme: const IconThemeData(color: Colors.grey),
+              unselectedItemColor: Colors.grey,
+              showSelectedLabels: true,
+              onTap: (index) {
+                _navigationBloc.add(OnChangeNav(tabIndex: index));
+              },
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.explore),
+                  label: 'Explore',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search),
+                  label: 'Search',
+                ),
+                BottomNavigationBarItem(
+                  icon: ImageIcon(AssetImage('assets/Images/Icon.png')),
+                  label: 'Categories',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+              ],
+            ),
           ),
-          body: screens[state.tabIndex],
         );
       },
     );
   }
+
+  Widget _buildNavigator(int index, Widget child) {
+    return Navigator(
+      key: _navigatorKeys[index],
+      onGenerateRoute: (_) => MaterialPageRoute(builder: (_) => child),
+    );
+  }
 }
+

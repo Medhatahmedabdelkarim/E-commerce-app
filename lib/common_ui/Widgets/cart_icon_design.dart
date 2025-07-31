@@ -18,18 +18,36 @@ class CartIconDesign extends StatelessWidget {
         return Stack(
           alignment: Alignment.bottomRight,
           children: [
-            GestureDetector(onTap:()=>Get.to(()=>CartScreen()),child: Container(height:36,width:36,child: Image.asset('assets/Images/Shopping Bag Outlined.png'),),),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => CartScreen()));
+              },
+              child: Container(
+                height: 36,
+                width: 36,
+                child: Image.asset('assets/Images/Shopping Bag Outlined.png'),
+              ),
+            ),
             Container(
               width: 18,
               height: 18,
               decoration: BoxDecoration(
-                  color: EColors.primary,
-                  borderRadius: BorderRadius.circular(20)
+                color: EColors.primary,
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
-                child: Text('${total}', style: TextStyle(color: Colors.white,fontSize: 10,fontWeight: FontWeight.w600),),
+                child: Text(
+                  '${total}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-            )
+            ),
           ],
         );
       },

@@ -10,7 +10,7 @@ import '../screens/search_dest_screen.dart';
 import '../screens/search_screen.dart';
 
 class SearchAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const SearchAppbar({super.key, required this.fromNavMenu});
+  const SearchAppbar({super.key, required this.fromNavMenu,});
 
   final bool fromNavMenu;
 

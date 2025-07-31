@@ -21,7 +21,13 @@ class CategoryProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 12, bottom: 8),
       child: InkWell(
-        onTap: () {Get.to(()=>ProductDetails(productId: product.id));},
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ProductDetails(productId: product.id),
+            ),
+          );
+        },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: Container(

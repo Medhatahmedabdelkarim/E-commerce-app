@@ -8,8 +8,9 @@ import 'package:get/get_core/src/get_main.dart';
 
 class FiltersAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FiltersAppBar({
-    super.key,
+    super.key,required this.onPressed
   });
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class FiltersAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: GestureDetector(onTap:(){},child: Text('Clear All',style: TextStyle(fontSize: 12,color: EColors.primary,fontWeight: FontWeight.w600),)),
+          child: GestureDetector(onTap:onPressed,child: Text('Clear All',style: TextStyle(fontSize: 12,color: EColors.primary,fontWeight: FontWeight.w600),)),
         ),
       ],
     );

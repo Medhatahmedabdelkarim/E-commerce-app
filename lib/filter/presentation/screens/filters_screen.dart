@@ -5,9 +5,13 @@ import 'package:dio/dio.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../cart/presentation/widgets/blue_button.dart';
 import '../../../services/api_services.dart';
+import '../managers/filters_bloc.dart';
 
 class FiltersScreen extends StatefulWidget {
   FiltersScreen({super.key});
@@ -17,6 +21,7 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
+  List<Category> _categories = [];
   String? selectedItem;
   late Future<List<Category>> _categoriesFuture;
   int price = 0;
@@ -33,7 +38,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FiltersAppBar(),
+      appBar: FiltersAppBar(onPressed: (){
+        setState(() {
+          selectedItem=null;
+          price=0;
+        });
+      },),
       backgroundColor: Colors.white,
       body: FutureBuilder(
         future: _categoriesFuture,
@@ -45,10 +55,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
           } else if (!snapshot.hasData) {
             return Center(child: Text("Product not found"));
           } else {
-            final List<Category> categories = snapshot.data!;
+            _categories = snapshot.data!;;
             return ListView(
               children: [
-                categoryTile(categories),
+                categoryTile(_categories),
                 Divider(
                   indent: 20,
                   endIndent: 20,
@@ -116,7 +126,22 @@ class _FiltersScreenState extends State<FiltersScreen> {
           }
         },
       ),
-      bottomNavigationBar: BlueButton(),
+      bottomNavigationBar: BlueButton(
+          onPressed: () {
+            final categoryId = selectedItem != null
+                ? _categories.firstWhere(
+                  (c) => c.name == selectedItem,
+              orElse: () => Category(id: -1, name: '', image: ''),
+            ).id
+                : null;
+            Get.back(result: {
+              'categoryId': categoryId,
+              'minPrice': 1,
+              'maxPrice': price > 0 ? price.toDouble() : null,
+              'title': null, // if needed
+            });
+          }
+      ),
     );
   }
 
@@ -166,7 +191,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                             });
                           },
                           min: 0,
-                          max: 10000,
+                          max: 300,
                         ),
                         Text(
                           "Max price: \$ ${price.toString()}",

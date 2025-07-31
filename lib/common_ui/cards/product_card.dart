@@ -18,9 +18,15 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var cartItemsBloc = context.read<CartBloc>();
     return Padding(
-      padding: const EdgeInsets.only(right: 12,bottom: 8),
+      padding: const EdgeInsets.only(right: 12, bottom: 8),
       child: InkWell(
-        onTap: () => Get.to(() => ProductDetails(productId: product.id)),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ProductDetails(productId: product.id),
+            ),
+          );
+        },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: Container(
@@ -39,7 +45,7 @@ class ProductCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  child: Image.network(product.images[0], fit: BoxFit.cover,),
+                  child: Image.network(product.images[0], fit: BoxFit.cover),
                 ),
                 Expanded(
                   child: Padding(
