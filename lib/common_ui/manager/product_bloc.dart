@@ -27,6 +27,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         categoryId: event.categoryId,
         minPrice: event.minPrice,
         maxPrice: event.maxPrice,
+        title: event.title
       );
       emit(ProductsLoaded(products));
 

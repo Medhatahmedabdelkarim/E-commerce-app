@@ -19,11 +19,10 @@ class SearchScreen extends StatelessWidget {
       body: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
           if (state is SearchLoaded && state.submitted) {
-            Get.to(() => SearchDestScreen(products: state.products));
+            Get.to(() => SearchDestScreen(products: state.products,query: state.query,));
           }
         },
         builder: (context, state) {
-          final searchBloc = context.read<SearchBloc>();
           if (state is SearchLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is SearchLoaded) {

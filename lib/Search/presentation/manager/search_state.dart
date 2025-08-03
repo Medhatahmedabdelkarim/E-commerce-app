@@ -14,8 +14,9 @@ class SearchRecent extends SearchState {
 class SearchLoaded extends SearchState {
   final List<Product> products;
   final bool submitted;
+  final String query;
 
-  SearchLoaded(this.products, {this.submitted = false});
+  SearchLoaded(this.products,this.query, {this.submitted = false});
 }
 
 class SearchLoading extends SearchState {}

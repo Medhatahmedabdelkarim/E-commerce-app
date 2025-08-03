@@ -14,7 +14,9 @@ import '../../../services/api_services.dart';
 import '../managers/filters_bloc.dart';
 
 class FiltersScreen extends StatefulWidget {
-  FiltersScreen({super.key});
+  FiltersScreen({super.key, required this.query});
+
+  final String query;
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
@@ -38,12 +40,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FiltersAppBar(onPressed: (){
-        setState(() {
-          selectedItem=null;
-          price=0;
-        });
-      },),
+      appBar: FiltersAppBar(
+        onPressed: () {
+          setState(() {
+            selectedItem = null;
+            price = 0;
+          });
+        },
+      ),
       backgroundColor: Colors.white,
       body: FutureBuilder(
         future: _categoriesFuture,
@@ -55,7 +59,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
           } else if (!snapshot.hasData) {
             return Center(child: Text("Product not found"));
           } else {
-            _categories = snapshot.data!;;
+            _categories = snapshot.data!;
+            ;
             return ListView(
               children: [
                 categoryTile(_categories),
@@ -127,81 +132,79 @@ class _FiltersScreenState extends State<FiltersScreen> {
         },
       ),
       bottomNavigationBar: BlueButton(
-          onPressed: () {
-            final categoryId = selectedItem != null
-                ? _categories.firstWhere(
-                  (c) => c.name == selectedItem,
-              orElse: () => Category(id: -1, name: '', image: ''),
-            ).id
-                : null;
-            Get.back(result: {
+        onPressed: () {
+          final categoryId = selectedItem != null
+              ? _categories
+                    .firstWhere(
+                      (c) => c.name == selectedItem,
+                      orElse: () => Category(id: -1, name: '', image: ''),
+                    )
+                    .id
+              : null;
+          Get.back(
+            result: {
               'categoryId': categoryId,
               'minPrice': 1,
               'maxPrice': price > 0 ? price.toDouble() : null,
               'title': null, // if needed
-            });
-          }
+            },
+          );
+        },
       ),
     );
   }
 
   Padding priceRange() {
     return Padding(
-                padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
-                child: ExpansionTile(
-                  trailing: price !=0
-                      ? Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: EColors.primary,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            '1',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      : null,
-                  shape: Border(),
-                  title: Text(
-                    'Price Range',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Slider(
-                          activeColor: EColors.primary,
-                          inactiveColor:Color.fromRGBO(229, 232, 255, 1),
-                          label: "Select Max Price",
-                          value: price.toDouble(),
-                          onChanged: (value) {
-                            setState(() {
-                              price = value.toInt();
-                            });
-                          },
-                          min: 0,
-                          max: 300,
-                        ),
-                        Text(
-                          "Max price: \$ ${price.toString()}",
-                          style: const TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                  ],
+      padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
+      child: ExpansionTile(
+        trailing: price != 0
+            ? Container(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: EColors.primary,
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              );
+                child: Text(
+                  '1',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            : null,
+        shape: Border(),
+        title: Text(
+          'Price Range',
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Slider(
+                activeColor: EColors.primary,
+                inactiveColor: Color.fromRGBO(229, 232, 255, 1),
+                label: "Select Max Price",
+                value: price.toDouble(),
+                onChanged: (value) {
+                  setState(() {
+                    price = value.toInt();
+                  });
+                },
+                min: 0,
+                max: 300,
+              ),
+              Text(
+                "Max price: \$ ${price.toString()}",
+                style: const TextStyle(fontSize: 16.0),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Padding categoryTile(List<Category> categories) {
@@ -265,7 +268,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       item.name,
                       style: TextStyle(
                         color: isSelected ? Colors.white : EColors.primary,
-                        fontWeight:FontWeight.w600
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),

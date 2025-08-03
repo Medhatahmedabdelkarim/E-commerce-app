@@ -34,7 +34,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     emit(SearchLoading());
     final products = await apiService.searchProducts(query);
-    emit(SearchLoaded(products, submitted: false));
+    emit(SearchLoaded(products, query,submitted: false));
   }
 
   Future<void> _onSearchSubmitted(
@@ -51,7 +51,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     emit(SearchLoading());
     final products = await apiService.searchProducts(query);
-    emit(SearchLoaded(products, submitted: true));
+    emit(SearchLoaded(products,query, submitted: true));
   }
 
   void _onRemoveRecentSearch(

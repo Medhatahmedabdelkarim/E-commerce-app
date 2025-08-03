@@ -61,7 +61,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
               index: state.tabIndex,
               children: [
                 _buildNavigator(0, HomeScreen()),
-                _buildNavigator(1, SearchDestScreen(products: [], fromNavMenu: true)),
+                _buildNavigator(1, SearchDestScreen(products: [], fromNavMenu: true,query: '',)),
                 _buildNavigator(2, CategoriesMainScreen()),
                 _buildNavigator(3, const ProfileScreen()),
               ],
