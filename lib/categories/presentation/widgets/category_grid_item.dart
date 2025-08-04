@@ -1,13 +1,9 @@
 import 'package:demo_app/categories/presentation/screens/category_items.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../data/models/category.dart';
 
 class CategoryGridItem extends StatelessWidget {
-  CategoryGridItem({super.key, required this.category});
+  const CategoryGridItem({super.key, required this.category});
 
   final Category category;
 

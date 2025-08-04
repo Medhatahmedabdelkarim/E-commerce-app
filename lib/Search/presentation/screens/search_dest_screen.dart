@@ -1,16 +1,9 @@
 import 'package:demo_app/Search/presentation/widgets/search_app_bar.dart';
 import 'package:demo_app/Search/presentation/widgets/search_items_grid.dart';
-import 'package:demo_app/constants/colors.dart';
-import 'package:demo_app/filter/presentation/screens/filters_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../common_ui/manager/product_bloc.dart';
 import '../../../data/models/product.dart';
-import '../../../navigation/Bloc/navigation_bloc.dart';
 import '../widgets/filter_button.dart';
 import '../widgets/sort_button.dart';
 

@@ -2,13 +2,10 @@ import 'package:demo_app/cart/bloc/cart_bloc.dart';
 import 'package:demo_app/cart/presentation/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../constants/colors.dart';
 
 class CartIconDesign extends StatelessWidget {
-  CartIconDesign({super.key});
+  const CartIconDesign({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +36,7 @@ class CartIconDesign extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  '${total}',
+                  '$total',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,

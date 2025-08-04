@@ -16,7 +16,7 @@ class SearchLoaded extends SearchState {
   final bool submitted;
   final String query;
 
-  SearchLoaded(this.products,this.query, {this.submitted = false});
+  SearchLoaded(this.products, this.query, {this.submitted = false});
 }
 
 class SearchLoading extends SearchState {}

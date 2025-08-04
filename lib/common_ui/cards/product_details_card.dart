@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-
 import '../../data/models/product.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +44,10 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
             child: DotsIndicator(
               dotsCount: items.length,
               position: currentIndex.toDouble(),
-              decorator: DotsDecorator(color: Color.fromRGBO(31,32,36, 1,),activeColor:Color.fromRGBO(0, 25, 255, 1,), ),
+              decorator: DotsDecorator(
+                color: Color.fromRGBO(31, 32, 36, 1),
+                activeColor: Color.fromRGBO(0, 25, 255, 1),
+              ),
             ),
           ),
         ],

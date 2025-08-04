@@ -1,13 +1,6 @@
-// import '../../product_details/presentation/product_details.dart';
-import 'package:demo_app/cart/bloc/cart_bloc.dart';
-import 'package:demo_app/common_ui/Widgets/circular_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import '../../data/models/product.dart';
 import '../../product_details/presentation/screens/product_details.dart';
-import '../../services/service_locator.dart';
-import '../Widgets/IncDec.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
@@ -16,7 +9,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cartItemsBloc = context.read<CartBloc>();
     return Padding(
       padding: const EdgeInsets.only(right: 12, bottom: 8),
       child: InkWell(
@@ -65,7 +57,7 @@ class ProductCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
                             '\$ ${product.price}',
                             style: TextStyle(

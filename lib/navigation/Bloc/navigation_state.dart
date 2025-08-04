@@ -8,7 +8,5 @@ sealed class NavigationState {
 }
 
 final class NavigationInitial extends NavigationState {
-
-NavigationInitial({required super.tabIndex});
+  NavigationInitial({required super.tabIndex});
 }
-

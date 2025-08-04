@@ -1,18 +1,18 @@
-import 'package:demo_app/categories/presentation/widgets/category_grid_item.dart';
 import 'package:demo_app/common_ui/Widgets/home_app_bar.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/category.dart';
 import '../../../services/api_services.dart';
 import '../widgets/categories_grid_view.dart';
 
-class CategoriesMainScreen extends StatelessWidget{
+class CategoriesMainScreen extends StatelessWidget {
   CategoriesMainScreen({super.key});
+
   final apiService = ApiService(
     Dio(BaseOptions(contentType: "application/json")),
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,10 @@ class CategoriesMainScreen extends StatelessWidget{
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 24),
-            child: Text('Categories',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w700),),
+            child: Text(
+              'Categories',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+            ),
           ),
           Expanded(
             child: Padding(
@@ -38,7 +41,7 @@ class CategoriesMainScreen extends StatelessWidget{
                   } else if (!snapshot.hasData) {
                     return Center(child: Text("Product not found"));
                   } else {
-                    final List<Category>categories = snapshot.data!;
+                    final List<Category> categories = snapshot.data!;
                     return CategoriesGridView(categories: categories);
                   }
                 },
@@ -49,6 +52,4 @@ class CategoriesMainScreen extends StatelessWidget{
       ),
     );
   }
-
 }
-

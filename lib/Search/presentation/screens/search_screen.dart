@@ -3,23 +3,27 @@ import 'package:demo_app/Search/presentation/widgets/search_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../product_details/presentation/screens/product_details.dart';
 import '../manager/search_bloc.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key,required this.fromNavMenu});
+  const SearchScreen({super.key, required this.fromNavMenu});
+
   final bool fromNavMenu;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppbar(fromNavMenu:fromNavMenu ,),
+      appBar: SearchAppbar(fromNavMenu: fromNavMenu),
       body: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
           if (state is SearchLoaded && state.submitted) {
-            Get.to(() => SearchDestScreen(products: state.products,query: state.query,));
+            Get.to(
+              () => SearchDestScreen(
+                products: state.products,
+                query: state.query,
+              ),
+            );
           }
         },
         builder: (context, state) {

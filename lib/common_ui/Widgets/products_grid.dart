@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductsGridView extends StatelessWidget {
-  ProductsGridView({super.key, required this.products});
+  const ProductsGridView({super.key, required this.products});
   final List<Product> products;
 
 

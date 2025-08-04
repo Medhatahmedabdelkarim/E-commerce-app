@@ -1,25 +1,21 @@
-import 'package:demo_app/categories/presentation/widgets/CategoryProductCard.dart';
-import 'package:demo_app/categories/presentation/widgets/category_grid_item.dart';
+import 'package:demo_app/categories/presentation/widgets/category_product_card.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../data/models/product.dart';
 import '../../../services/api_services.dart';
 
-class CategoriesItemsGrid extends StatelessWidget{
-  CategoriesItemsGrid({super.key,required this.categoryId});
+class CategoriesItemsGrid extends StatelessWidget {
+  CategoriesItemsGrid({super.key, required this.categoryId});
 
   final int categoryId;
-
 
   final apiService = ApiService(
     Dio(BaseOptions(contentType: "application/json")),
   );
+
   @override
   Widget build(BuildContext context) {
-
-    return  FutureBuilder<List<Product>>(
+    return FutureBuilder<List<Product>>(
       future: apiService.getCategoryProducts(categoryId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,17 +39,13 @@ class CategoriesItemsGrid extends StatelessWidget{
                   mainAxisExtent: 253,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return CategoryProductCard(product: product[index],);
+                  return CategoryProductCard(product: product[index]);
                 },
-
               ),
             ),
           );
         }
       },
-    )
-      ;
-
+    );
   }
-
 }

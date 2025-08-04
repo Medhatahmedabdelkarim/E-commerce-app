@@ -1,8 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-
 import '../../constants/colors.dart';
-import '../../data/models/product.dart';
 import 'package:flutter/material.dart';
 
 class CardDesign extends StatefulWidget {
@@ -14,9 +11,13 @@ class CardDesign extends StatefulWidget {
 
 int currentIndex = 0;
 
-
 class _ProductDetailsCardState extends State<CardDesign> {
-  var items=[Image.asset('assets/Images/Picture swipe.png',fit: BoxFit.cover,),Image.asset('assets/Images/Picture swipe.png',fit: BoxFit.cover,),Image.asset('assets/Images/Picture swipe.png',fit: BoxFit.cover)];
+  var items = [
+    Image.asset('assets/Images/Picture swipe.png', fit: BoxFit.cover),
+    Image.asset('assets/Images/Picture swipe.png', fit: BoxFit.cover),
+    Image.asset('assets/Images/Picture swipe.png', fit: BoxFit.cover),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,15 +26,16 @@ class _ProductDetailsCardState extends State<CardDesign> {
       child: Stack(
         children: [
           PageView.builder(
-              onPageChanged: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-              itemCount: items.length,
-              itemBuilder: (context, pagePosition) {
-                return items[currentIndex];
-              }),
+            onPageChanged: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            itemCount: items.length,
+            itemBuilder: (context, pagePosition) {
+              return items[currentIndex];
+            },
+          ),
           Positioned(
             bottom: 0,
             right: 0,
@@ -41,7 +43,10 @@ class _ProductDetailsCardState extends State<CardDesign> {
             child: DotsIndicator(
               dotsCount: items.length,
               position: currentIndex.toDouble(),
-              decorator: DotsDecorator(color: Color.fromRGBO(31,32,36, 1,),activeColor:EColors.primary, ),
+              decorator: DotsDecorator(
+                color: Color.fromRGBO(31, 32, 36, 1),
+                activeColor: EColors.primary,
+              ),
             ),
           ),
         ],

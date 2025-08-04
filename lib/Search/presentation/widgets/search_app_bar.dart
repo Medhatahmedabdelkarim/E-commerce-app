@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../../../constants/colors.dart';
 import '../../../navigation/Bloc/navigation_bloc.dart';
 import '../manager/search_bloc.dart';
-import '../screens/search_dest_screen.dart';
 import '../screens/search_screen.dart';
 
 class SearchAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const SearchAppbar({super.key, required this.fromNavMenu,});
+  const SearchAppbar({super.key, required this.fromNavMenu});
 
   final bool fromNavMenu;
 
@@ -37,7 +34,7 @@ class SearchAppbar extends StatelessWidget implements PreferredSizeWidget {
                 color: EColors.primary,
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Container(
               width: 299,
               height: 44,

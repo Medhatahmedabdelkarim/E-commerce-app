@@ -1,19 +1,8 @@
 import 'package:demo_app/Search/presentation/screens/search_dest_screen.dart';
-import 'package:demo_app/cart/presentation/screens/cart_screen.dart';
 import 'package:demo_app/categories/presentation/screens/categories_main_screen.dart';
-import 'package:demo_app/common_ui/Widgets/home_app_bar.dart';
 import 'package:demo_app/profile/presentation/screens/profile_screen.dart';
-import 'package:demo_app/splash_screen/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-
-import '../../../cart/bloc/cart_bloc.dart';
 import '../../../constants/colors.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import '../../Bloc/navigation_bloc.dart';
@@ -22,7 +11,7 @@ class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
 
   @override
-  State<NavigationMenu> createState() => _NavigationMenuState(); // This creates the state
+  State<NavigationMenu> createState() => _NavigationMenuState();
 }
 
 class _NavigationMenuState extends State<NavigationMenu> {

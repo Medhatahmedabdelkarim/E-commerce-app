@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../common_ui/manager/product_bloc.dart';
 import '../../../constants/colors.dart';
 import '../../../filter/presentation/screens/filters_screen.dart';
 
 class FilterButton extends StatefulWidget {
-  FilterButton({super.key, required this.query});
+  const FilterButton({super.key, required this.query});
 
   final String query;
 
@@ -18,7 +15,7 @@ class FilterButton extends StatefulWidget {
 }
 
 class _FilterButtonState extends State<FilterButton> {
-  int count=0;
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +33,11 @@ class _FilterButtonState extends State<FilterButton> {
           );
         }
         setState(() {
-          count=0;
-          if(filters['categoryId']!=null){
+          count = 0;
+          if (filters['categoryId'] != null) {
             count++;
           }
-          if(filters['maxPrice']!=null){
+          if (filters['maxPrice'] != null) {
             count++;
           }
         });

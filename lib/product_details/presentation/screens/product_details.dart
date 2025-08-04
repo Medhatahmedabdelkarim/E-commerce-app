@@ -1,10 +1,7 @@
-import 'package:demo_app/common_ui/Widgets/sizes_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../cart/bloc/cart_bloc.dart';
-import '../../../common_ui/Widgets/rating_bar.dart';
 import '../../../common_ui/cards/product_details_card.dart';
 import '../../../constants/colors.dart';
 import '../../../data/models/product.dart';
@@ -13,7 +10,7 @@ import 'package:flutter/material.dart';
 import '../../../services/api_services.dart';
 
 class ProductDetails extends StatefulWidget {
-  ProductDetails({super.key, required this.productId});
+  const ProductDetails({super.key, required this.productId});
 
   final int productId;
 
@@ -40,14 +37,16 @@ class _ProductDetailsState extends State<ProductDetails> {
             return Center(child: Text("Product not found"));
           } else {
             final product = snapshot.data!;
-            return ProductDetailsUi(context, product);
+            return productDetailsUi(context, product);
           }
         },
       ),
     );
   }
-  bool flag=true;
-  Widget ProductDetailsUi(BuildContext context, Product product) {
+
+  bool flag = true;
+
+  Widget productDetailsUi(BuildContext context, Product product) {
     return ListView(
       children: [
         Column(
@@ -80,61 +79,61 @@ class _ProductDetailsState extends State<ProductDetails> {
                           });
                         },
                         icon: Icon(
-                          flag?
-                          CupertinoIcons.heart:Icons.favorite,
+                          flag ? CupertinoIcons.heart : Icons.favorite,
                           color: EColors.primary,
                           size: 24,
-                        )
                         ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     "\$ ${product.price}",
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Text(
                     product.description,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Text(
                     "Size",
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   SizedBox(
                     height: 32,
                     child: Row(
                       children: [Image.asset('assets/Images/Colours (1).png')],
                     ),
                   ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
 
                   Text(
                     "Colors  ",
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   SizedBox(
                     height: 32,
                     child: Image.asset('assets/Images/Colours.png'),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
 
                   addToCartButton(context, product),
                 ],
               ),
             ),
 
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
           ],
         ),
       ],
     );
   }
 }
+
 Container buyNowButton() {
   return Container(
     width: double.infinity,
@@ -258,21 +257,21 @@ ListView colorsSlider() {
           ),
         ],
       ),
-      SizedBox(width: 5),
+      const SizedBox(width: 5),
       Container(
         width: 32,
         height: 32,
         decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
         child: CircleAvatar(backgroundColor: Colors.pink),
       ),
-      SizedBox(width: 5),
+      const SizedBox(width: 5),
       Container(
         width: 32,
         height: 32,
         decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
         child: CircleAvatar(backgroundColor: Colors.pink),
       ),
-      SizedBox(width: 5),
+      const SizedBox(width: 5),
       Container(
         width: 32,
         height: 32,

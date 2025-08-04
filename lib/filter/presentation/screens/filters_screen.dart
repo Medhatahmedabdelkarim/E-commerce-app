@@ -146,7 +146,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               'categoryId': categoryId,
               'minPrice': 1,
               'maxPrice': price > 0 ? price.toDouble() : null,
-              'title': null, // if needed
+              'title': null,
             },
           );
         },

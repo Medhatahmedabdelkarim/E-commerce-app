@@ -27,7 +27,7 @@ class CategoriesDesign extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(category.name, style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),

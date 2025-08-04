@@ -1,22 +1,14 @@
-import 'package:demo_app/cart/bloc/cart_bloc.dart';
-import 'package:demo_app/common_ui/Widgets/cart_icon_design.dart';
 import 'package:demo_app/services/api_services.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../common_ui/Widgets/categories_list.dart';
 import '../../../common_ui/Widgets/home_app_bar.dart';
 import '../../../common_ui/Widgets/products_grid.dart';
 import '../../../common_ui/cards/home_main_card.dart';
 import '../../../constants/colors.dart';
-import '../../../data/models/category.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../data/models/product.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +64,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 FutureBuilder _body() {
   final apiService = ApiService(

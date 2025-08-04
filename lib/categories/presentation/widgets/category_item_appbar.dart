@@ -1,8 +1,5 @@
 import 'package:demo_app/Search/presentation/screens/search_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../../common_ui/Widgets/cart_icon_design.dart';
 import '../../../constants/colors.dart';
 
@@ -19,9 +16,11 @@ class CategoryItemAppbar extends StatelessWidget
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ImageIcon(
-              AssetImage("assets/Images/Left Button.png"),
-              color: EColors.primary,
+            GestureDetector(
+              child: ImageIcon(
+                AssetImage("assets/Images/Left Button.png"),
+                color: EColors.primary,
+              ),
             ),
             Container(
               width: 253,
@@ -45,7 +44,7 @@ class CategoryItemAppbar extends StatelessWidget
                 }),
                 onTap: () {
                   MaterialPageRoute(
-                    builder: (_) => SearchScreen(fromNavMenu: true,)
+                    builder: (_) => SearchScreen(fromNavMenu: true),
                   );
                 },
               ),

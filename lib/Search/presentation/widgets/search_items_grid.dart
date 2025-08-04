@@ -1,14 +1,10 @@
-import 'package:demo_app/categories/presentation/widgets/CategoryProductCard.dart';
-import 'package:demo_app/categories/presentation/widgets/category_grid_item.dart';
-import 'package:dio/dio.dart';
+import 'package:demo_app/categories/presentation/widgets/category_product_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../data/models/product.dart';
-import '../../../services/api_services.dart';
 
 class SearchItemsGrid extends StatelessWidget {
-  SearchItemsGrid({super.key, required this.products});
+  const SearchItemsGrid({super.key, required this.products});
 
   final List<Product> products;
 

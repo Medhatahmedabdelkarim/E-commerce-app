@@ -35,8 +35,4 @@ abstract class ApiService {
     @Query("price_min") double? minPrice,
     @Query("price_max") double? maxPrice,
   });
-
-
 }
-
-
