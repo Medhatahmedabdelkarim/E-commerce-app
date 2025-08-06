@@ -12,6 +12,7 @@ class Product {
     required this.images,
     required this.description,
     this.count = 1,
+    this.isFavorite = false,
   });
 
   @HiveField(0)
@@ -26,6 +27,8 @@ class Product {
   int count;
   @HiveField(5)
   int id;
+  @HiveField(6)
+  bool isFavorite;
 
   factory Product.fromJson(Map<String, dynamic> parsedJson) {
     return Product(
@@ -41,6 +44,7 @@ class Product {
           [],
       description: parsedJson['description'] ?? "",
       count: parsedJson['count'] ?? 0,
+      isFavorite: parsedJson['isFavorite'] ?? false,
     );
   }
 
@@ -52,6 +56,7 @@ class Product {
       "images": images,
       "description": description,
       "count": count,
+      "isFavorite": isFavorite,
     };
   }
 }

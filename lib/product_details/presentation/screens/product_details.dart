@@ -7,6 +7,7 @@ import '../../../constants/colors.dart';
 import '../../../data/models/product.dart';
 import 'package:flutter/material.dart';
 
+import '../../../favorites/presentation/manager/favorites_bloc.dart';
 import '../../../services/api_services.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -22,6 +23,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   final apiService = ApiService(
     Dio(BaseOptions(contentType: "application/json")),
   );
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +50,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  bool flag = true;
-
   Widget productDetailsUi(BuildContext context, Product product) {
     return ListView(
+      shrinkWrap: true,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,17 +77,39 @@ class _ProductDetailsState extends State<ProductDetails> {
                           maxLines: 1,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            flag = !flag;
-                          });
+                      BlocBuilder<FavoritesBloc, FavoritesState>(
+                        builder: (context, state) {
+                          final FavoritesItemsBloc = context
+                              .read<FavoritesBloc>();
+                          final isFavorited = state.items.any(
+                            (item) => item.id == product.id,
+                          );
+
+                          return GestureDetector(
+                            onTap: () {
+                              if (!isFavorited) {
+                                FavoritesItemsBloc.add(AddToFavorites(product));
+                              } else {
+                                FavoritesItemsBloc.add(
+                                  RemoveFromFavorites(product),
+                                );
+                              }
+                            },
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              child: !isFavorited
+                                  ? Image.asset(
+                                      'assets/Images/Heart Outlined.png',
+                                      color: EColors.primary,
+                                    )
+                                  : Image.asset(
+                                      'assets/Images/Heart Filled.png',
+                                      color: EColors.primary,
+                                    ),
+                            ),
+                          );
                         },
-                        icon: Icon(
-                          flag ? CupertinoIcons.heart : Icons.favorite,
-                          color: EColors.primary,
-                          size: 24,
-                        ),
                       ),
                     ],
                   ),
@@ -132,27 +159,6 @@ class _ProductDetailsState extends State<ProductDetails> {
       ],
     );
   }
-}
-
-Container buyNowButton() {
-  return Container(
-    width: double.infinity,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      color: Colors.blue,
-    ),
-    child: TextButton(
-      onPressed: () {},
-      child: Text(
-        "Buy Now",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-          color: Colors.black,
-        ),
-      ),
-    ),
-  );
 }
 
 BlocBuilder addToCartButton(BuildContext context, Product product) {

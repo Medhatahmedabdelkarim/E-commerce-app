@@ -31,7 +31,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       updatedCart.add(event.product..count = 1);
     }
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(
+    await LocalStorage.saveLocal(
       updatedCart,
       Constants.cartItemsKey,
       Constants.cartKey,
@@ -49,7 +49,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(
+    await LocalStorage.saveLocal(
       updatedCart,
       Constants.cartItemsKey,
       Constants.cartKey,
@@ -60,7 +60,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final updatedCart = List<Product>.from(state.items);
     updatedCart.clear();
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(
+    await LocalStorage.saveLocal(
       updatedCart,
       Constants.cartItemsKey,
       Constants.cartKey,
@@ -72,7 +72,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final index = updatedCart.indexWhere((p) => p.title == event.product.title);
     updatedCart.removeAt(index);
     emit(CartState(updatedCart));
-    await LocalStorage.saveCart(
+    await LocalStorage.saveLocal(
       updatedCart,
       Constants.cartItemsKey,
       Constants.cartKey,
@@ -84,7 +84,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _initializeCart() async {
-    final savedCart = await LocalStorage.loadCart(
+    final savedCart = await LocalStorage.loadLocal(
       Constants.cartItemsKey,
       Constants.cartKey,
     );

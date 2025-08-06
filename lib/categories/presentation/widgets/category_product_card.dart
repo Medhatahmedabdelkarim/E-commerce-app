@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constants/colors.dart';
 import '../../../data/models/product.dart';
+import '../../../favorites/presentation/manager/favorites_bloc.dart';
 
 class CategoryProductCard extends StatelessWidget {
   const CategoryProductCard({super.key, required this.product});
@@ -126,15 +127,33 @@ class CategoryProductCard extends StatelessWidget {
         Positioned(
           top: 12,
           right: 7.5,
-          child: GestureDetector(
-            child: Container(
-              height: 20,
-              width: 20,
-              child: Image.asset(
-                'assets/Images/Heart Outlined.png',
-                color: EColors.primary,
-              ),
-            ),
+          child: BlocBuilder<FavoritesBloc, FavoritesState>(
+            builder: (context, state) {
+              final FavoritesItemsBloc = context.read<FavoritesBloc>();
+              final isFavorited = state.items.any((item) => item.id == product.id);
+              return GestureDetector(
+                onTap: () {
+                  if (!isFavorited) {
+                    FavoritesItemsBloc.add(AddToFavorites(product));
+                  } else {
+                    FavoritesItemsBloc.add(RemoveFromFavorites(product));
+                  }
+                },
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: !isFavorited
+                      ? Image.asset(
+                          'assets/Images/Heart Outlined.png',
+                          color: EColors.primary,
+                        )
+                      : Image.asset(
+                          'assets/Images/Heart Filled.png',
+                          color: EColors.primary,
+                        ),
+                ),
+              );
+            },
           ),
         ),
       ],

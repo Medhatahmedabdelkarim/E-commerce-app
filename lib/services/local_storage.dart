@@ -8,7 +8,11 @@ class LocalStorageServices {
   String itemsKey;
   String key;
 
-  Future<void> saveCart(List<Product> cart, String itemsKey, String key) async {
+  Future<void> saveLocal(
+    List<Product> cart,
+    String itemsKey,
+    String key,
+  ) async {
     final cartBox = await Hive.openBox(key);
     final List<Map<String, dynamic>> cartData = cart
         .map((product) => product.toJson())
@@ -17,7 +21,7 @@ class LocalStorageServices {
     await cartBox.put(itemsKey, encodedCart);
   }
 
-  Future<List<Product>> loadCart(String itemsKey, String key) async {
+  Future<List<Product>> loadLocal(String itemsKey, String key) async {
     final cartBox = await Hive.openBox(key);
     final cartData = cartBox.get(itemsKey);
     final List<dynamic> decoded = jsonDecode(cartData);

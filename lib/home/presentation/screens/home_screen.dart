@@ -72,7 +72,14 @@ FutureBuilder _body() {
   return FutureBuilder(
     future: apiService.getProduct(),
     builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.done) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError) {
+        return Center(child: Text("Error: ${snapshot.error}"));
+      } else if (!snapshot.hasData) {
+        return Center(child: Text("Product not found"));
+      }
+      else if (snapshot.connectionState == ConnectionState.done) {
         final List<Product> products = snapshot.data!;
         return _products(products);
       } else {

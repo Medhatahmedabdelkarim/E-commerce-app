@@ -9,6 +9,7 @@ import 'package:hive_flutter/adapters.dart';
 
 import 'Search/presentation/manager/search_bloc.dart';
 import 'common_ui/manager/product_bloc.dart';
+import 'favorites/presentation/manager/favorites_bloc.dart';
 import 'filter/presentation/managers/filters_bloc.dart';
 import 'navigation/Bloc/navigation_bloc.dart';
 
@@ -17,6 +18,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
   await Hive.openBox('cart');
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -32,6 +34,10 @@ void main() async {
         ),
         BlocProvider<FilterBloc>(
           create: (BuildContext context) => FilterBloc(),
+        ),
+        BlocProvider<FavoritesBloc>(
+          create: (BuildContext context) =>
+              FavoritesBloc()..add(LoadFavorites()),
         ),
       ],
       child: GetMaterialApp(
