@@ -8,6 +8,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'Search/presentation/manager/search_bloc.dart';
+import 'categories/presentation/manager/categories_bloc.dart';
 import 'common_ui/manager/product_bloc.dart';
 import 'favorites/presentation/manager/favorites_bloc.dart';
 import 'filter/presentation/managers/filters_bloc.dart';
@@ -38,6 +39,9 @@ void main() async {
         BlocProvider<FavoritesBloc>(
           create: (BuildContext context) =>
               FavoritesBloc()..add(LoadFavorites()),
+        ),
+        BlocProvider<CategoriesBloc>(
+          create: (BuildContext context) => CategoriesBloc(),
         ),
       ],
       child: GetMaterialApp(

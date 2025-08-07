@@ -235,6 +235,8 @@ class _ApiService implements ApiService {
     String? title,
     double? minPrice,
     double? maxPrice,
+    int offset = 0,
+    int limit = 10,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -242,6 +244,8 @@ class _ApiService implements ApiService {
       r'title': title,
       r'price_min': minPrice,
       r'price_max': maxPrice,
+      r'offset': offset,
+      r'limit': limit,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

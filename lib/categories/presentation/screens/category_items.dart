@@ -106,7 +106,7 @@ class CategoryItemsScreen extends StatelessWidget {
               ],
             ),
           ),
-          CategoriesItemsGrid(categoryId: categoryId),
+          Expanded(child: CategoriesItemsGrid(categoryId: categoryId)),
         ],
       ),
     );

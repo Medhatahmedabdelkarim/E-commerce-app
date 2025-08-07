@@ -34,5 +34,7 @@ abstract class ApiService {
     @Query("title") String? title,
     @Query("price_min") double? minPrice,
     @Query("price_max") double? maxPrice,
+    @Query("offset") int offset = 0,
+    @Query("limit") int limit = 10,
   });
 }
