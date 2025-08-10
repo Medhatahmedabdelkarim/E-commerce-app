@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import '../../data/models/product.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 class ProductDetailsCard extends StatefulWidget {
   const ProductDetailsCard({super.key, required this.product});
 
-  final Product product;
+  final ProductEntity product;
 
   @override
   State<ProductDetailsCard> createState() => _ProductDetailsCardState();

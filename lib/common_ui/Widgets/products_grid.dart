@@ -1,3 +1,5 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
+
 import '../cards/product_card.dart';
 import '../../data/models/product.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class ProductsGridView extends StatelessWidget {
   const ProductsGridView({super.key, required this.products});
-  final List<Product> products;
+  final List<ProductEntity> products;
 
 
   @override

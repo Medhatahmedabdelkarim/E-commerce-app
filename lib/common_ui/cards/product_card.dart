@@ -1,11 +1,12 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/product.dart';
-import '../../product_details/presentation/screens/product_details.dart';
+import '../../presentation/product_details/screens/product_details.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
 
-  final Product product;
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {

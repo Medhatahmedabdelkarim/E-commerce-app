@@ -1,5 +1,5 @@
-import 'package:demo_app/cart/bloc/cart_bloc.dart';
-import 'package:demo_app/cart/presentation/screens/cart_screen.dart';
+import 'package:demo_app/presentation/cart/manager/cart_bloc.dart';
+import 'package:demo_app/presentation/cart/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/colors.dart';

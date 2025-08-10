@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/product_entity.dart';
-import '../../presentation/cart/manager/cart_bloc.dart';
-import '../../constants/colors.dart';
-import '../../data/models/product.dart';
+import '../../cart/manager/cart_bloc.dart';
+import '../../../constants/colors.dart';
+import '../../../data/models/product.dart';
 
-class IncDec extends StatelessWidget {
-  const IncDec({
+class IncDecCategoryProduct extends StatelessWidget {
+  const IncDecCategoryProduct({
     super.key,
     required this.cartItemsBloc,
     required this.product,
@@ -14,17 +13,17 @@ class IncDec extends StatelessWidget {
   });
 
   final CartBloc cartItemsBloc;
-  final ProductEntity product;
+  final Product product;
   final VoidCallback onIncPressed;
   final VoidCallback onDecPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 75,
-      height: 32,
+      width: 133.5,
+      height: 36,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             height: 24,
@@ -38,10 +37,16 @@ class IncDec extends StatelessWidget {
               child: Icon(Icons.remove, color: EColors.primary, size: 20),
             ),
           ),
+          const SizedBox(width: 12),
           Text(
             '${cartItemsBloc.state.items.firstWhere((item) => item.title == product.title, orElse: () => product).count}',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
           ),
+          const SizedBox(width: 12),
           Container(
             height: 24,
             width: 24,

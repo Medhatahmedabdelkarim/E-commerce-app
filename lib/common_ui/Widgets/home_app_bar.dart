@@ -1,7 +1,7 @@
-import 'package:demo_app/Search/presentation/screens/search_screen.dart';
+import 'package:demo_app/presentation/search/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../favorites/presentation/screens/favorites_screen.dart';
+import '../../presentation/favorites/screens/favorites_screen.dart';
 import 'cart_icon_design.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
