@@ -1,5 +1,6 @@
 import 'package:demo_app/presentation/cart/manager/cart_bloc.dart';
 import 'package:demo_app/data/models/product.dart';
+import 'package:demo_app/presentation/categories/manager/main_categories_bloc/categories_list_bloc.dart';
 import 'package:demo_app/presentation/home/manager/home_bloc.dart';
 import 'package:demo_app/presentation/product_details/manager/product_details_bloc.dart';
 import 'package:demo_app/services/service_locator.dart' as di;
@@ -10,7 +11,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'presentation/search/manager/search_bloc.dart';
-import 'presentation/categories/manager/categories_bloc.dart';
+import 'presentation/categories/manager/category_product_bloc/categories_bloc.dart';
 import 'common_ui/manager/product_bloc.dart';
 import 'presentation/favorites/manager/favorites_bloc.dart';
 import 'presentation/filters/manager/filters_bloc.dart';
@@ -29,23 +30,25 @@ void main() async {
         BlocProvider<NavigationBloc>(
           create: (BuildContext context) => NavigationBloc(),
         ),
-        BlocProvider<SearchBloc>(
-          create: (BuildContext context) => SearchBloc(),
-        ),
-        BlocProvider<ProductBloc>(
-          create: (BuildContext context) => ProductBloc(),
-        ),
-        BlocProvider<FilterBloc>(
-          create: (BuildContext context) => FilterBloc(),
-        ),
-        BlocProvider<FavoritesBloc>(create: (_) => di.sl<FavoritesBloc>()),
+        BlocProvider<SearchBloc>(create: (_) => di.sl<SearchBloc>()),
 
-        BlocProvider<CategoriesBloc>(
-          create: (BuildContext context) => CategoriesBloc(),
+        BlocProvider<ProductBloc>(create: (_) => di.sl<ProductBloc>()),
+
+        BlocProvider<FiltersBloc>(create: (_) => di.sl<FiltersBloc>()),
+
+        BlocProvider<FavoritesBloc>(
+          create: (_) => di.sl<FavoritesBloc>()..add(LoadFavorites()),
         ),
+
+        BlocProvider<CategoriesListBloc>(
+          create: (_) => di.sl<CategoriesListBloc>()..add(LoadCategories()),
+        ),
+        BlocProvider<CategoriesBloc>(create: (_) => di.sl<CategoriesBloc>()),
+
         BlocProvider<HomeBloc>(create: (_) => di.sl<HomeBloc>()),
-        BlocProvider<ProductDetailsBloc>(create: (_) => di.sl<ProductDetailsBloc>()),
-
+        BlocProvider<ProductDetailsBloc>(
+          create: (_) => di.sl<ProductDetailsBloc>(),
+        ),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

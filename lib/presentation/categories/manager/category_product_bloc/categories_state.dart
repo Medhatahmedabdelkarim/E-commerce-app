@@ -9,7 +9,7 @@ final class CategoriesInitial extends CategoriesState {}
 class CategoriesLoading extends CategoriesState {}
 
 class CategoriesLoaded extends CategoriesState {
-  final List<Product> products;
+  final List<ProductEntity> products;
   final bool hasReachedEnd;
 
   CategoriesLoaded({required this.products, required this.hasReachedEnd});

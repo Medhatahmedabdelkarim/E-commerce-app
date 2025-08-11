@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,7 +9,7 @@ class SortButton extends StatelessWidget {
   const SortButton({super.key, required this.items, required this.products});
 
   final List<String> items;
-  final List<Product> products;
+  final List<ProductEntity> products;
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ class SearchRecent extends SearchState {
 }
 
 class SearchLoaded extends SearchState {
-  final List<Product> products;
+  final List<ProductEntity> products;
   final bool submitted;
   final String query;
 

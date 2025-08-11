@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import '../../cart/manager/cart_bloc.dart';
 import '../../../constants/colors.dart';
@@ -13,7 +14,7 @@ class IncDecCategoryProduct extends StatelessWidget {
   });
 
   final CartBloc cartItemsBloc;
-  final Product product;
+  final ProductEntity product;
   final VoidCallback onIncPressed;
   final VoidCallback onDecPressed;
 

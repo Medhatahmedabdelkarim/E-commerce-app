@@ -35,14 +35,14 @@ class Product extends ProductEntity {
     this.count = 1,
     this.isFavorite = false,
   }) : super(
-    id: id,
-    title: title,
-    price: price,
-    images: images,
-    description: description,
-    count: count,
-    isFavorite: isFavorite,
-  );
+         id: id,
+         title: title,
+         price: price,
+         images: images,
+         description: description,
+         count: count,
+         isFavorite: isFavorite,
+       );
 
   factory Product.fromJson(Map<String, dynamic> parsedJson) {
     return Product(
@@ -51,9 +51,10 @@ class Product extends ProductEntity {
       price: (parsedJson['price'] is int)
           ? (parsedJson['price'] as int).toDouble()
           : (parsedJson['price'] as num?)?.toDouble() ?? 0.0,
-      images: (parsedJson['images'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ??
+      images:
+          (parsedJson['images'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
           [],
       description: parsedJson['description'] ?? "",
       count: parsedJson['count'] ?? 1,
@@ -72,6 +73,7 @@ class Product extends ProductEntity {
       "isFavorite": isFavorite,
     };
   }
+
   factory Product.fromEntity(ProductEntity entity) {
     return Product(
       id: entity.id,
@@ -84,7 +86,6 @@ class Product extends ProductEntity {
     );
   }
 
-  // From Model → Entity
   ProductEntity toEntity() {
     return ProductEntity(
       id: id,

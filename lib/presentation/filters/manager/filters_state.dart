@@ -1,14 +1,12 @@
 part of 'filters_bloc.dart';
 
-@immutable
-abstract class FilterState {}
+abstract class FiltersState {}
 
-class FilterInitial extends FilterState {}
+class FiltersInitial extends FiltersState {}
 
-class FilterLoading extends FilterState {}
+class FiltersLoading extends FiltersState {}
 
-class FilterLoaded extends FilterState {
-  final List<Product> filteredProducts;
-
-  FilterLoaded(this.filteredProducts);
+class CategoriesLoaded extends FiltersState {
+  final List<CategoryEntity> categories;
+  CategoriesLoaded(this.categories);
 }

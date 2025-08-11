@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'category_product_card.dart';
-import '../manager/categories_bloc.dart';
+import '../manager/category_product_bloc/categories_bloc.dart';
 
 class CategoriesItemsGrid extends StatefulWidget {
   final int categoryId;

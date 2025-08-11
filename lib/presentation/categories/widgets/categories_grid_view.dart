@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/category_entity.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../data/models/category.dart';
@@ -9,7 +10,7 @@ class CategoriesGridView extends StatelessWidget {
     required this.categories,
   });
 
-  final List<Category> categories;
+  final List<CategoryEntity> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,9 @@ class CategoriesGridView extends StatelessWidget {
         mainAxisSpacing: 12,
         crossAxisCount: 2,
       ), itemBuilder: (BuildContext context, int index) {
-      return CategoryGridItem(category: categories[index]);
+      final cat = categories[index];
+      print('Category at $index: id=${cat.id}');  // Add this debug print!
+      return CategoryGridItem(category: cat);
     },
     );
   }

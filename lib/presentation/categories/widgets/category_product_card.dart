@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:demo_app/presentation/cart/manager/cart_bloc.dart';
 import 'package:demo_app/presentation/categories/widgets/inc_dec_category_product.dart';
 import 'package:demo_app/presentation/product_details/screens/product_details.dart';
@@ -10,7 +11,7 @@ import '../../favorites/manager/favorites_bloc.dart';
 class CategoryProductCard extends StatelessWidget {
   const CategoryProductCard({super.key, required this.product});
 
-  final Product product;
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/category_entity.dart';
 import 'package:demo_app/presentation/categories/screens/category_items.dart';
 import 'package:flutter/material.dart';
 import '../../../data/models/category.dart';
@@ -5,13 +6,14 @@ import '../../../data/models/category.dart';
 class CategoryGridItem extends StatelessWidget {
   const CategoryGridItem({super.key, required this.category});
 
-  final Category category;
+  final CategoryEntity category;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () {
+        print(category.id);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => CategoryItemsScreen(categoryId: category.id),

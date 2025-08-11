@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:demo_app/presentation/categories/widgets/category_product_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import '../../../data/models/product.dart';
 class SearchItemsGrid extends StatelessWidget {
   const SearchItemsGrid({super.key, required this.products});
 
-  final List<Product> products;
+  final List<ProductEntity> products;
 
   @override
   Widget build(BuildContext context) {

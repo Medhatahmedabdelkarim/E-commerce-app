@@ -1,9 +1,10 @@
 import 'package:demo_app/data/models/product.dart';
+import 'package:demo_app/domain/entities/product_entity.dart';
 
 class SortHelper{
 
-  static List<Product>sortProducts(String sortFun,List<Product>products){
-    List<Product>sortedList=products;
+  static List<ProductEntity>sortProducts(String sortFun,List<ProductEntity>products){
+    List<ProductEntity>sortedList=products;
     if(sortFun=='Sort from A-Z'){
       sortedList.sort((a, b) => a.title.compareTo(b.title));
     }

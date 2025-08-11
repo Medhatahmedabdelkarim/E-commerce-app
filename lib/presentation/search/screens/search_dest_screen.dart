@@ -1,3 +1,4 @@
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:demo_app/presentation/search/widgets/search_app_bar.dart';
 import 'package:demo_app/presentation/search/widgets/search_items_grid.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class SearchDestScreen extends StatelessWidget {
     required this.query,
   });
 
-  final List<Product> products;
+  final List<ProductEntity> products;
   final bool fromNavMenu;
   final String query;
 

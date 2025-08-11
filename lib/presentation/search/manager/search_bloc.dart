@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/models/product.dart';
+import '../../../domain/UseCases/search_use_cases.dart';
 import '../../../services/api_services.dart';
 
 part 'search_event.dart';
@@ -10,55 +12,50 @@ part 'search_event.dart';
 part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final apiService = ApiService(
-    Dio(BaseOptions(contentType: "application/json")),
-  );
-  final List<String> recentSearches = [];
+  final SearchProductsUseCase searchProductsUseCase;
+  final GetRecentSearchesUseCase getRecentSearchesUseCase;
+  final AddRecentSearchUseCase addRecentSearchUseCase;
+  final RemoveRecentSearchUseCase removeRecentSearchUseCase;
 
-  SearchBloc() : super(SearchInitial()) {
+  SearchBloc({
+    required this.searchProductsUseCase,
+    required this.getRecentSearchesUseCase,
+    required this.addRecentSearchUseCase,
+    required this.removeRecentSearchUseCase,
+  }) : super(SearchInitial()) {
     on<SearchQueryChanged>(_onSearchQueryChanged);
     on<SearchSubmitted>(_onSearchSubmitted);
     on<RemoveRecentSearch>(_onRemoveRecentSearch);
   }
 
   Future<void> _onSearchQueryChanged(
-    SearchQueryChanged event,
-    Emitter<SearchState> emit,
-  ) async {
+      SearchQueryChanged event, Emitter<SearchState> emit) async {
     final query = event.query.trim();
 
     if (query.isEmpty) {
-      emit(SearchRecent(List.from(recentSearches)));
+      emit(SearchRecent(getRecentSearchesUseCase()));
       return;
     }
 
     emit(SearchLoading());
-    final products = await apiService.searchProducts(query);
+    final products = await searchProductsUseCase(query);
     emit(SearchLoaded(products, query, submitted: false));
   }
 
   Future<void> _onSearchSubmitted(
-    SearchSubmitted event,
-    Emitter<SearchState> emit,
-  ) async {
+      SearchSubmitted event, Emitter<SearchState> emit) async {
     final query = event.query.trim();
     if (query.isEmpty) return;
-
-    if (!recentSearches.contains(query)) {
-      if (recentSearches.length == 4) recentSearches.removeLast();
-      recentSearches.insert(0, query);
-    }
+    addRecentSearchUseCase(query);
 
     emit(SearchLoading());
-    final products = await apiService.searchProducts(query);
+    final products = await searchProductsUseCase(query);
     emit(SearchLoaded(products, query, submitted: true));
   }
 
   void _onRemoveRecentSearch(
-    RemoveRecentSearch event,
-    Emitter<SearchState> emit,
-  ) {
-    recentSearches.remove(event.query);
-    emit(SearchRecent(List.from(recentSearches)));
+      RemoveRecentSearch event, Emitter<SearchState> emit) {
+    removeRecentSearchUseCase(event.query);
+    emit(SearchRecent(getRecentSearchesUseCase()));
   }
 }

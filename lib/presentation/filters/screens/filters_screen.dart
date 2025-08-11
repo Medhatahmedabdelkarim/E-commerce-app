@@ -9,12 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../domain/entities/category_entity.dart';
 import '../../cart/widgets/blue_button.dart';
 import '../../../services/api_services.dart';
 import '../manager/filters_bloc.dart';
 
 class FiltersScreen extends StatefulWidget {
-  FiltersScreen({super.key, required this.query});
+  const FiltersScreen({super.key, required this.query});
 
   final String query;
 
@@ -23,18 +24,13 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  List<Category> _categories = [];
   String? selectedItem;
-  late Future<List<Category>> _categoriesFuture;
   int price = 0;
-  final apiService = ApiService(
-    Dio(BaseOptions(contentType: "application/json")),
-  );
 
   @override
   void initState() {
     super.initState();
-    _categoriesFuture = apiService.getCategory();
+    context.read<FiltersBloc>().add(LoadCategoriesEvent());
   }
 
   @override
@@ -49,95 +45,24 @@ class _FiltersScreenState extends State<FiltersScreen> {
         },
       ),
       backgroundColor: Colors.white,
-      body: FutureBuilder(
-        future: _categoriesFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          } else if (!snapshot.hasData) {
-            return Center(child: Text("Product not found"));
-          } else {
-            _categories = snapshot.data!;
-            ;
-            return ListView(
-              children: [
-                categoryTile(_categories),
-                Divider(
-                  indent: 20,
-                  endIndent: 20,
-                  color: Color.fromRGBO(212, 214, 221, 1),
-                ),
-                priceRange(),
-                Divider(
-                  indent: 20,
-                  endIndent: 20,
-                  color: Color.fromRGBO(212, 214, 221, 1),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
-                  child: ExpansionTile(
-                    title: Text(
-                      'Color',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(
-                  indent: 20,
-                  endIndent: 20,
-                  color: Color.fromRGBO(212, 214, 221, 1),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
-                  child: ExpansionTile(
-                    title: Text(
-                      'Size',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(
-                  indent: 20,
-                  endIndent: 20,
-                  color: Color.fromRGBO(212, 214, 221, 1),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
-                  child: ExpansionTile(
-                    title: Text(
-                      'Customer Review',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(
-                  indent: 20,
-                  endIndent: 20,
-                  color: Color.fromRGBO(212, 214, 221, 1),
-                ),
-              ],
-            );
+      body: BlocBuilder<FiltersBloc, FiltersState>(
+        builder: (context, state) {
+          if (state is FiltersLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is CategoriesLoaded) {
+            return _buildFilterList(state.categories);
           }
+          return const SizedBox();
         },
       ),
       bottomNavigationBar: BlueButton(
         onPressed: () {
           final categoryId = selectedItem != null
-              ? _categories
+              ? (context.read<FiltersBloc>().state as CategoriesLoaded)
+                    .categories
                     .firstWhere(
                       (c) => c.name == selectedItem,
-                      orElse: () => Category(id: -1, name: '', image: ''),
+                      orElse: () => CategoryEntity(id: -1, name: '', image: ''),
                     )
                     .id
               : null;
@@ -154,18 +79,70 @@ class _FiltersScreenState extends State<FiltersScreen> {
     );
   }
 
+  Widget _buildFilterList(List<CategoryEntity> categories) {
+    return ListView(
+      children: [
+        categoryTile(categories),
+        Divider(
+          indent: 20,
+          endIndent: 20,
+          color: Color.fromRGBO(212, 214, 221, 1),
+        ),
+        priceRange(),
+        Divider(
+          indent: 20,
+          endIndent: 20,
+          color: Color.fromRGBO(212, 214, 221, 1),
+        ),
+        _expansionTile('Color'),
+        Divider(
+          indent: 20,
+          endIndent: 20,
+          color: Color.fromRGBO(212, 214, 221, 1),
+        ),
+        _expansionTile('Size'),
+        Divider(
+          indent: 20,
+          endIndent: 20,
+          color: Color.fromRGBO(212, 214, 221, 1),
+        ),
+        _expansionTile('Customer Review'),
+        Divider(
+          indent: 20,
+          endIndent: 20,
+          color: Color.fromRGBO(212, 214, 221, 1),
+        ),
+      ],
+    );
+  }
+
+  Widget _expansionTile(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: ExpansionTile(
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+      ),
+    );
+  }
+
   Padding priceRange() {
     return Padding(
       padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
       child: ExpansionTile(
         trailing: price != 0
             ? Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: EColors.primary,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(
+                child: const Text(
                   '1',
                   style: TextStyle(
                     color: Colors.white,
@@ -174,18 +151,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 ),
               )
             : null,
-        shape: Border(),
-        title: Text(
+        title: const Text(
           'Price Range',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         ),
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Slider(
                 activeColor: EColors.primary,
-                inactiveColor: Color.fromRGBO(229, 232, 255, 1),
+                inactiveColor: const Color.fromRGBO(229, 232, 255, 1),
                 label: "Select Max Price",
                 value: price.toDouble(),
                 onChanged: (value) {
@@ -197,7 +172,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 max: 300,
               ),
               Text(
-                "Max price: \$ ${price.toString()}",
+                "Max price: \$${price.toString()}",
                 style: const TextStyle(fontSize: 16.0),
               ),
             ],
@@ -207,22 +182,22 @@ class _FiltersScreenState extends State<FiltersScreen> {
     );
   }
 
-  Padding categoryTile(List<Category> categories) {
+  Padding categoryTile(List<CategoryEntity> categories) {
     return Padding(
       padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
       child: ExpansionTile(
-        shape: const Border(),
-        expandedCrossAxisAlignment: CrossAxisAlignment.start,
-        expandedAlignment: Alignment.topLeft,
-        title: Text('Category'),
+        title: const Text('Category'),
         trailing: selectedItem != null
             ? Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: EColors.primary,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(
+                child: const Text(
                   '1',
                   style: TextStyle(
                     color: Colors.white,
@@ -242,24 +217,20 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 return InkWell(
                   onTap: () {
                     setState(() {
-                      if (selectedItem == item.name) {
-                        selectedItem = null;
-                      } else {
-                        selectedItem = item.name;
-                      }
+                      selectedItem = isSelected ? null : item.name;
                     });
                   },
                   borderRadius: BorderRadius.circular(30),
                   child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? EColors.primary
-                          : Color.fromRGBO(229, 232, 255, 1),
+                          : const Color.fromRGBO(229, 232, 255, 1),
                       border: Border.all(
                         color: isSelected
                             ? EColors.primary
-                            : Color.fromRGBO(229, 232, 255, 1),
+                            : const Color.fromRGBO(229, 232, 255, 1),
                         width: 1.5,
                       ),
                       borderRadius: BorderRadius.circular(30),

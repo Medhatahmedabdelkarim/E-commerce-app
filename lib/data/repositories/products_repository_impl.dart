@@ -18,4 +18,20 @@ class ProductRepositoryImpl implements ProductRepository {
     final model = await remoteDataSource.getProductById(id);
     return model.toEntity();
   }
+
+  @override
+  Future<List<ProductEntity>> getFilteredProducts({
+    int? categoryId,
+    double? minPrice,
+    double? maxPrice,
+    String? title,
+  }) async {
+    final products = await remoteDataSource.getFilteredProducts(
+      categoryId: categoryId,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      title: title,
+    );
+    return products.map((p) => p.toEntity()).toList();
+  }
 }
