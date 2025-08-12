@@ -1,6 +1,6 @@
 import 'package:demo_app/presentation/search/screens/search_dest_screen.dart';
 import 'package:demo_app/presentation/categories/screens/categories_main_screen.dart';
-import 'package:demo_app/profile/presentation/screens/profile_screen.dart';
+import 'package:demo_app/presentation/profile/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constants/colors.dart';

@@ -1,7 +1,6 @@
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../domain/repositories/categories_repository.dart';
-import '../../services/api_services.dart';
 import '../data_sources/remote/categories_remote_source.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {

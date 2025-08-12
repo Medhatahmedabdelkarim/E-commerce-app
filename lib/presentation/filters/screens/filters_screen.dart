@@ -120,6 +120,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: ExpansionTile(
+        shape: Border(),
         title: Text(
           title,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
@@ -132,6 +133,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return Padding(
       padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
       child: ExpansionTile(
+        shape: Border(),
         trailing: price != 0
             ? Container(
                 padding: const EdgeInsets.symmetric(
@@ -186,6 +188,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return Padding(
       padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
       child: ExpansionTile(
+        shape: Border(),
         title: const Text('Category'),
         trailing: selectedItem != null
             ? Container(
