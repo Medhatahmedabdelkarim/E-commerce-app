@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/category.dart';
 import '../../../services/api_services.dart';
-import '../../../services/service_locator.dart';
+import '../../../dependency_injection/service_locator.dart';
 import '../manager/category_product_bloc/categories_bloc.dart';
 import '../manager/main_categories_bloc/categories_list_bloc.dart';
 import '../widgets/categories_grid_view.dart';
@@ -41,12 +41,19 @@ class CategoriesMainScreen extends StatelessWidget {
                       if (state.categories.isEmpty) {
                         return const Center(child: Text('No categories found'));
                       }
-                      // Pass entities or convert to UI models as needed
                       return CategoriesGridView(categories: state.categories);
+                    } else if (state is CategoriesListError) {
+                      return Center(
+                        child: Text(
+                          state.message,
+                          style: const TextStyle(color: Colors.red),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
                     }
                     return const SizedBox.shrink();
                   },
-                ),
+                )
               ),
             ),
           ],

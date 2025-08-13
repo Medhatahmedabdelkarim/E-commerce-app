@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common_ui/cards/product_details_card.dart';
 import '../../../constants/colors.dart';
-import '../../../services/service_locator.dart';
+import '../../../dependency_injection/service_locator.dart';
 import '../../cart/manager/cart_bloc.dart';
 import '../../favorites/manager/favorites_bloc.dart';
 import '../../../domain/entities/product_entity.dart';

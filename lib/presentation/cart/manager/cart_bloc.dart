@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:demo_app/data/models/product.dart';
 import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:demo_app/domain/repositories/cart_repository.dart';
-import 'package:demo_app/services/service_locator.dart';
+import 'package:demo_app/dependency_injection/service_locator.dart';
 import 'package:meta/meta.dart';
 
 import '../../../domain/UseCases/cart_use_cases.dart';

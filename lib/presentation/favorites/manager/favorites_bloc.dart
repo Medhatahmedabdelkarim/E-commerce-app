@@ -6,7 +6,7 @@ import '../../../constants/constants.dart';
 import '../../../data/models/product.dart';
 import '../../../domain/UseCases/favorites_use_cases.dart';
 import '../../../services/local_storage.dart';
-import '../../../services/service_locator.dart';
+import '../../../dependency_injection/service_locator.dart';
 
 part 'favorites_event.dart';
 

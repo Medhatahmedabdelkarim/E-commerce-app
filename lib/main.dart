@@ -3,7 +3,7 @@ import 'package:demo_app/data/models/product.dart';
 import 'package:demo_app/presentation/categories/manager/main_categories_bloc/categories_list_bloc.dart';
 import 'package:demo_app/presentation/home/manager/home_bloc.dart';
 import 'package:demo_app/presentation/product_details/manager/product_details_bloc.dart';
-import 'package:demo_app/services/service_locator.dart' as di;
+import 'package:demo_app/dependency_injection/service_locator.dart' as di;
 import 'package:demo_app/splash_screen/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

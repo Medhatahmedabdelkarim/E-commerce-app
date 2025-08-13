@@ -14,3 +14,7 @@ class CategoriesLoaded extends CategoriesState {
 
   CategoriesLoaded({required this.products, required this.hasReachedEnd});
 }
+class CategoriesError extends CategoriesState {
+  final String message;
+  CategoriesError(this.message);
+}

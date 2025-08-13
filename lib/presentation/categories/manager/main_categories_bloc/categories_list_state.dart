@@ -11,3 +11,7 @@ class CategoriesListLoaded extends CategoriesListState {
   final List<CategoryEntity> categories;
   CategoriesListLoaded({required this.categories});
 }
+class CategoriesListError extends CategoriesListState {
+  final String message;
+  CategoriesListError(this.message);
+}

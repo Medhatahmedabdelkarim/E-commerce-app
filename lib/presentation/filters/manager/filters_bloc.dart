@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/utils/resource.dart';
 import '../../../data/models/product.dart';
 import '../../../domain/UseCases/categories_use_case.dart';
 import '../../../domain/entities/category_entity.dart';
@@ -17,9 +18,14 @@ class FiltersBloc extends Bloc<FiltersEvent, FiltersState> {
   FiltersBloc({required this.getCategories}) : super(FiltersInitial()) {
     on<LoadCategoriesEvent>((event, emit) async {
       emit(FiltersLoading());
-        final categories = await getCategories();
-        emit(CategoriesLoaded(categories));
 
+      final result = await getCategories();
+
+      if (result is Success<List<CategoryEntity>>) {
+        emit(CategoriesLoaded(result.data));
+      } else if (result is Error<List<CategoryEntity>>) {
+        emit(FiltersError(result.message));
+      }
     });
   }
 }

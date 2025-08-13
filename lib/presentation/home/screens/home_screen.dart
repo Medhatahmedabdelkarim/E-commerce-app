@@ -7,7 +7,7 @@ import '../../../common_ui/cards/home_main_card.dart';
 import '../../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import '../../../data/models/product.dart';
-import '../../../services/service_locator.dart';
+import '../../../dependency_injection/service_locator.dart';
 import '../manager/home_bloc.dart';
 import '../widgets/home_header.dart';
 import '../widgets/products_section.dart';

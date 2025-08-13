@@ -10,3 +10,7 @@ class CategoriesLoaded extends FiltersState {
   final List<CategoryEntity> categories;
   CategoriesLoaded(this.categories);
 }
+class FiltersError extends FiltersState {
+  final String message;
+  FiltersError(this.message);
+}

@@ -1,15 +1,16 @@
+import '../../../core/utils/api_result.dart';
 import '../../../services/api_services.dart';
 import '../../models/category.dart';
 import '../../models/product.dart';
-
+import 'package:dio/dio.dart';
 abstract class CategoryRemoteDataSource {
-  Future<List<Category>> getCategories();
+  Future<ApiResult<List<Category>>> getCategories();
 
-  Future<List<Product>> getCategoryProducts(
-    int categoryId, {
-    int offset,
-    int limit,
-  });
+  Future<ApiResult<List<Product>>> getCategoryProducts(
+      int categoryId, {
+        int offset,
+        int limit,
+      });
 }
 
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
@@ -18,20 +19,22 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   CategoryRemoteDataSourceImpl(this.apiService);
 
   @override
-  Future<List<Category>> getCategories() {
-    return apiService.getCategory();
+  Future<ApiResult<List<Category>>> getCategories() {
+    return ApiResult.handleApi(() => apiService.getCategory());
   }
 
   @override
-  Future<List<Product>> getCategoryProducts(
-    int categoryId, {
-    int offset = 0,
-    int limit = 10,
-  }) {
-    return apiService.getFilteredProducts(
-      categoryId: categoryId,
-      offset: offset,
-      limit: limit,
+  Future<ApiResult<List<Product>>> getCategoryProducts(
+      int categoryId, {
+        int offset = 0,
+        int limit = 10,
+      }) {
+    return ApiResult.handleApi(
+          () => apiService.getFilteredProducts(
+        categoryId: categoryId,
+        offset: offset,
+        limit: limit,
+      ),
     );
   }
 }

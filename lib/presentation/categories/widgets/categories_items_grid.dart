@@ -47,10 +47,10 @@ class _CategoriesItemsGridState extends State<CategoriesItemsGrid> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is CategoriesLoaded) {
           final products = state.products;
-
           if (products.isEmpty) {
             return const Center(child: Text("No products found"));
           }
+
           return SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Padding(
@@ -76,9 +76,21 @@ class _CategoriesItemsGridState extends State<CategoriesItemsGrid> {
               ),
             ),
           );
-        } else {
+        }
+        else if (state is CategoriesError) {
+          return Center(
+            child: Text(
+              state.message,
+              style: const TextStyle(color: Colors.red, fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+
+        else {
           return SizedBox();
         }
+
       },
     );
   }

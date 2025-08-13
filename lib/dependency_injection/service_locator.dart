@@ -30,8 +30,8 @@ import '../presentation/filters/manager/filters_bloc.dart';
 import '../presentation/home/manager/home_bloc.dart';
 import '../presentation/product_details/manager/product_details_bloc.dart';
 import '../presentation/search/manager/search_bloc.dart';
-import 'api_services.dart';
-import 'local_storage.dart';
+import '../services/api_services.dart';
+import '../services/local_storage.dart';
 
 final sl = GetIt.instance;
 
