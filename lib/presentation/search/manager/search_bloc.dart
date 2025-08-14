@@ -3,6 +3,7 @@ import 'package:demo_app/domain/entities/product_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/utils/resource.dart';
 import '../../../data/models/product.dart';
 import '../../../domain/UseCases/search_use_cases.dart';
 import '../../../services/api_services.dart';
@@ -38,19 +39,30 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
 
     emit(SearchLoading());
-    final products = await searchProductsUseCase(query);
-    emit(SearchLoaded(products, query, submitted: false));
+    final result = await searchProductsUseCase(query);
+
+    if (result is Success<List<ProductEntity>>) {
+      emit(SearchLoaded(result.data, query, submitted: false));
+    } else if (result is Error<List<ProductEntity>>) {
+      emit(SearchError(result.message));
+    }
   }
 
   Future<void> _onSearchSubmitted(
       SearchSubmitted event, Emitter<SearchState> emit) async {
     final query = event.query.trim();
     if (query.isEmpty) return;
-    addRecentSearchUseCase(query);
 
+    addRecentSearchUseCase(query);
     emit(SearchLoading());
-    final products = await searchProductsUseCase(query);
-    emit(SearchLoaded(products, query, submitted: true));
+
+    final result = await searchProductsUseCase(query);
+
+    if (result is Success<List<ProductEntity>>) {
+      emit(SearchLoaded(result.data, query, submitted: true));
+    } else if (result is Error<List<ProductEntity>>) {
+      emit(SearchError(result.message ));
+    }
   }
 
   void _onRemoveRecentSearch(

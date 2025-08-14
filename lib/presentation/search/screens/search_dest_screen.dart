@@ -60,6 +60,14 @@ class SearchDestScreen extends StatelessWidget {
           ),
           BlocBuilder<ProductBloc, ProductState>(
             builder: (context, state) {
+              if (state is ProductsError) {
+                return Center(
+                  child: Text(
+                    "Error: ${state.message}",
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                );
+              }
               final displayProducts =
                   (state is ProductsLoaded && state.products.isNotEmpty)
                   ? state.products

@@ -1,9 +1,10 @@
+import '../../core/utils/resource.dart';
 import '../entities/product_entity.dart';
 
 abstract class ProductRepository {
-  Future<List<ProductEntity>> getProducts();
-  Future<ProductEntity> getProductById(int id);
-  Future<List<ProductEntity>> getFilteredProducts({
+  Future<Resource<List<ProductEntity>>> getProducts();
+  Future<Resource<ProductEntity>> getProductById(int id);
+  Future<Resource<List<ProductEntity>>> getFilteredProducts({
     int? categoryId,
     double? minPrice,
     double? maxPrice,

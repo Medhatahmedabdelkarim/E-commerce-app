@@ -78,6 +78,13 @@ class SearchScreen extends StatelessWidget {
                 ],
               ),
             );
+          } else if (state is SearchError) {
+            return Center(
+              child: Text(
+                "Error: ${state.message}",
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
           } else {
             return Center(child: Text("Search for products"));
           }

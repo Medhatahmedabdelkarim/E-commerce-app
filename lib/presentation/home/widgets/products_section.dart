@@ -14,7 +14,8 @@ class ProductsSection extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         } else if (state is HomeError) {
           return Center(child: Text(state.message));
-        } else if (state is HomeLoaded) {
+        }
+        else if (state is HomeLoaded) {
           return ProductsGridView(products: state.products);
         }
         return SizedBox();

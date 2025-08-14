@@ -20,3 +20,8 @@ class SearchLoaded extends SearchState {
 }
 
 class SearchLoading extends SearchState {}
+class SearchError extends SearchState {
+  final String message;
+
+  SearchError(this.message);
+}

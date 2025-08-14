@@ -1,3 +1,4 @@
+import '../../../core/utils/api_result.dart';
 import '../../../services/api_services.dart';
 import '../../models/product.dart';
 
@@ -6,8 +7,7 @@ class SearchRemoteDataSource {
 
   SearchRemoteDataSource(this.apiService);
 
-  Future<List<Product>> searchProducts(String query) async {
-    final response = await apiService.searchProducts(query);
-    return response;
+  Future<ApiResult<List<Product>>> searchProducts(String query) {
+    return ApiResult.handleApi(() => apiService.searchProducts(query));
   }
 }

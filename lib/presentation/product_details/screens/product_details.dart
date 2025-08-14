@@ -9,7 +9,6 @@ import '../../favorites/manager/favorites_bloc.dart';
 import '../../../domain/entities/product_entity.dart';
 import '../../product_details/manager/product_details_bloc.dart';
 
-
 class ProductDetails extends StatelessWidget {
   final int productId;
 
@@ -19,19 +18,24 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-      sl<ProductDetailsBloc>()..add(LoadProductDetails(productId)),
+          sl<ProductDetailsBloc>()..add(LoadProductDetails(productId)),
       child: Scaffold(
         body: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
           builder: (context, state) {
             if (state is ProductDetailsLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is ProductDetailsError) {
-              return Center(child: Text("Error: ${state.message}"));
+              return Center(
+                child: Text(
+                  "Error: ${state.message}",
+                  style: const TextStyle(color: Colors.red),
+                ),
+              );
             } else if (state is ProductDetailsLoaded) {
               final product = state.product;
               return _productDetailsUi(context, product);
             }
-            return const SizedBox.shrink();
+            return const SizedBox();
           },
         ),
       ),
@@ -69,7 +73,9 @@ class ProductDetails extends StatelessWidget {
                       BlocBuilder<FavoritesBloc, FavoritesState>(
                         builder: (context, state) {
                           final favoritesBloc = context.read<FavoritesBloc>();
-                          final isFavorited = state.items.any((item) => item.id == product.id);
+                          final isFavorited = state.items.any(
+                            (item) => item.id == product.id,
+                          );
 
                           return GestureDetector(
                             onTap: () {
@@ -84,13 +90,13 @@ class ProductDetails extends StatelessWidget {
                               width: 20,
                               child: !isFavorited
                                   ? Image.asset(
-                                'assets/Images/Heart Outlined.png',
-                                color: EColors.primary,
-                              )
+                                      'assets/Images/Heart Outlined.png',
+                                      color: EColors.primary,
+                                    )
                                   : Image.asset(
-                                'assets/Images/Heart Filled.png',
-                                color: EColors.primary,
-                              ),
+                                      'assets/Images/Heart Filled.png',
+                                      color: EColors.primary,
+                                    ),
                             ),
                           );
                         },
@@ -100,12 +106,18 @@ class ProductDetails extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     "\$ ${product.price}",
-                    style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   Text(
                     product.description,
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                   const SizedBox(height: 40),
                   const Text(
@@ -173,7 +185,9 @@ class ProductDetails extends StatelessWidget {
             ),
           );
         } else {
-          final productInCart = state.items.firstWhere((item) => item.id == product.id);
+          final productInCart = state.items.firstWhere(
+            (item) => item.id == product.id,
+          );
           return Container(
             width: double.infinity,
             decoration: BoxDecoration(

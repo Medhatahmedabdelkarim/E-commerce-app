@@ -9,3 +9,7 @@ class ProductsLoaded extends ProductState {
 
   ProductsLoaded(this.products);
 }
+class ProductsError extends ProductState {
+  final String message;
+  ProductsError(this.message);
+}

@@ -1,3 +1,4 @@
+import '../../core/utils/resource.dart';
 import '../entities/product_entity.dart';
 import '../repositories/search_repository.dart';
 
@@ -6,8 +7,8 @@ class SearchProductsUseCase {
 
   SearchProductsUseCase(this.repository);
 
-  Future<List<ProductEntity>> call(String query) async {
-    return await repository.searchProducts(query);
+  Future<Resource<List<ProductEntity>>> call(String query) {
+    return repository.searchProducts(query);
   }
 }
 
@@ -16,9 +17,7 @@ class GetRecentSearchesUseCase {
 
   GetRecentSearchesUseCase(this._recentSearches);
 
-  List<String> call() {
-    return _recentSearches;
-  }
+  List<String> call() => _recentSearches;
 }
 
 class AddRecentSearchUseCase {
@@ -27,11 +26,13 @@ class AddRecentSearchUseCase {
   AddRecentSearchUseCase(this._recentSearches);
 
   void call(String query) {
-    if (!_recentSearches.contains(query)) {
-      if (_recentSearches.length == 4) {
-        _recentSearches.removeLast();
-      }
-      _recentSearches.insert(0, query);
+    if (query.trim().isEmpty) return;
+
+    _recentSearches.remove(query); // Move to top if exists
+    _recentSearches.insert(0, query);
+
+    if (_recentSearches.length > 4) {
+      _recentSearches.removeLast();
     }
   }
 }

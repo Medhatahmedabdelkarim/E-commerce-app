@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/utils/resource.dart';
 import '../../../domain/UseCases/products_use_case.dart';
 import '../../../domain/entities/product_entity.dart';
 
@@ -13,11 +14,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(this.getProducts) : super(HomeLoading()) {
     on<LoadProductsEvent>((event, emit) async {
       emit(HomeLoading());
-      try {
-        final products = await getProducts();
-        emit(HomeLoaded(products));
-      } catch (e) {
-        emit(HomeError(e.toString()));
+
+      final result = await getProducts();
+
+      if (result is Success<List<ProductEntity>>) {
+        emit(HomeLoaded(result.data));
+      } else if (result is Error<List<ProductEntity>>) {
+        emit(HomeError(result.message));
+      } else {
+        emit(const HomeError("Unknown error occurred"));
       }
     });
   }

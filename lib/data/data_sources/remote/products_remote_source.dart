@@ -1,12 +1,13 @@
+import '../../../core/utils/api_result.dart';
 import '../../../services/api_services.dart';
 import '../../models/product.dart';
 
 abstract class ProductRemoteDataSource {
-  Future<List<Product>> getProducts();
+  Future<ApiResult<List<Product>>> getProducts();
 
-  Future<Product> getProductById(int id);
+  Future<ApiResult<Product>> getProductById(int id);
 
-  Future<List<Product>> getFilteredProducts({
+  Future<ApiResult<List<Product>>> getFilteredProducts({
     int? categoryId,
     double? minPrice,
     double? maxPrice,
@@ -20,27 +21,31 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   ProductRemoteDataSourceImpl(this.apiService);
 
   @override
-  Future<List<Product>> getProducts() {
-    return apiService.getProduct();
+  Future<ApiResult<List<Product>>> getProducts() {
+    return ApiResult.handleApi(() => apiService.getProduct());
   }
 
   @override
-  Future<Product> getProductById(int id) {
-    return apiService.getProductById(id);
+  Future<ApiResult<Product>> getProductById(int id) {
+    return ApiResult.handleApi(() => apiService.getProductById(id));
   }
 
   @override
-  Future<List<Product>> getFilteredProducts({
+  Future<ApiResult<List<Product>>> getFilteredProducts({
     int? categoryId,
     double? minPrice,
     double? maxPrice,
     String? title,
+    int offset = 0,
+    int limit = 10,
   }) {
-    return apiService.getFilteredProducts(
-      categoryId: categoryId,
-      minPrice: minPrice,
-      maxPrice: maxPrice,
-      title: title,
+    return ApiResult.handleApi(
+      () => apiService.getFilteredProducts(
+        categoryId: categoryId,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        title: title,
+      ),
     );
   }
 }
