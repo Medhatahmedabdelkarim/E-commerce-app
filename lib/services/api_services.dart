@@ -6,7 +6,7 @@ import '../data/models/category.dart';
 
 part 'api_services.g.dart';
 
-@RestApi(baseUrl: 'https://api.escuelajs.co/api/v1/')
+@RestApi(baseUrl: 'http://10.0.2.2:8000/')
 abstract class ApiService {
   factory ApiService(Dio dio) = _ApiService;
 

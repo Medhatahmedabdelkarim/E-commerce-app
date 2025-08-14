@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 
 abstract class ApiResult<T> {
@@ -8,7 +10,8 @@ abstract class ApiResult<T> {
       final data = await apiCall();
       return ApiSuccess(data);
     } on DioException catch (e) {
-      String message = "An unknown error occurred";
+      print(e);
+            String message = "An unknown error occurred";
       final statusCode = e.response?.statusCode;
       //status codes taken from the back-end team
       if (statusCode != null) {
@@ -30,9 +33,7 @@ abstract class ApiResult<T> {
             e.type == DioExceptionType.sendTimeout ||
             e.type == DioExceptionType.receiveTimeout) {
           message = "Connection timeout. Please check your internet.";
-        } else if (e.type == DioExceptionType.connectionError) {
-          message = "No internet connection. Please check your network.";
-        } else if (e.type == DioExceptionType.badResponse) {
+        }  else if (e.type == DioExceptionType.badResponse) {
           message = "Received an invalid response from the server.";
         }
       }
