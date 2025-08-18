@@ -157,7 +157,9 @@ class ProductDetails extends StatelessWidget {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         final cartBloc = context.read<CartBloc>();
-        final inCart = state.items.any((item) => item.id == product.id);
+        final inCart = state.items.any(
+              (item) => item.id == product.id,
+        );
 
         if (!inCart) {
           return Container(

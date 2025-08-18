@@ -39,7 +39,7 @@ class IncDec extends StatelessWidget {
             ),
           ),
           Text(
-            '${cartItemsBloc.state.items.firstWhere((item) => item.title == product.title, orElse: () => product).count}',
+            '${cartItemsBloc.state.items.firstWhere((item) => item.id == product.id, orElse: () => product).count}',
             style: TextStyle(color: Colors.black),
           ),
           Container(
