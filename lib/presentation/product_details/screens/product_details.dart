@@ -81,6 +81,11 @@ class ProductDetails extends StatelessWidget {
                             onTap: () {
                               if (!isFavorited) {
                                 favoritesBloc.add(AddToFavorites(product));
+                                print(product.id);
+                                print(isFavorited);
+                                for(var i in state.items){
+                                  print(i.id);
+                                }
                               } else {
                                 favoritesBloc.add(RemoveFromFavorites(product));
                               }

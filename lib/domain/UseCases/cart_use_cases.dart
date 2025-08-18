@@ -8,7 +8,7 @@ class AddToCartUseCase {
 
   Future<List<ProductEntity>> call(List<ProductEntity> currentItems, ProductEntity product) async {
     final updatedCart = List<ProductEntity>.from(currentItems);
-    final index = updatedCart.indexWhere((p) => p.title == product.title);
+    final index = updatedCart.indexWhere((p) => p.id == product.id);
     if (index != -1) {
       updatedCart[index].count += 1;
     } else {
@@ -27,7 +27,7 @@ class RemoveFromCartUseCase {
 
   Future<List<ProductEntity>> call(List<ProductEntity> currentItems, ProductEntity product) async {
     final updatedCart = List<ProductEntity>.from(currentItems);
-    final index = updatedCart.indexWhere((p) => p.title == product.title);
+    final index = updatedCart.indexWhere((p) => p.id == product.id);
     if (index != -1) {
       if (updatedCart[index].count > 1) {
         updatedCart[index].count -= 1;
@@ -59,7 +59,7 @@ class DeleteSpecificProductUseCase {
 
   Future<List<ProductEntity>> call(List<ProductEntity> currentItems, ProductEntity product) async {
     final updatedCart = List<ProductEntity>.from(currentItems);
-    final index = updatedCart.indexWhere((p) => p.title == product.title);
+    final index = updatedCart.indexWhere((p) => p.id == product.id);
     if (index != -1) {
       updatedCart.removeAt(index);
     }

@@ -8,7 +8,7 @@ class AddToFavoritesUseCase {
 
   Future<List<ProductEntity>> call(List<ProductEntity> currentItems, ProductEntity product) async {
     final updatedFavorites = List<ProductEntity>.from(currentItems);
-    final exists = updatedFavorites.any((p) => p.title == product.title);
+    final exists = updatedFavorites.any((p) => p.id == product.id);
     if (!exists) {
       updatedFavorites.add(product);
     }
@@ -24,7 +24,7 @@ class RemoveFromFavoritesUseCase {
 
   Future<List<ProductEntity>> call(List<ProductEntity> currentItems, ProductEntity product) async {
     final updatedFavorites = List<ProductEntity>.from(currentItems);
-    updatedFavorites.removeWhere((p) => p.title == product.title);
+    updatedFavorites.removeWhere((p) => p.id == product.id);
     await repository.saveFavorites(updatedFavorites);
     return updatedFavorites;
   }
