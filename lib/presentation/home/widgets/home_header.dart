@@ -5,8 +5,9 @@ import '../../../constants/colors.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
-    super.key,
+    super.key,required this.title,
   });
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class HomeHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '  All Products',
+          '  $title',
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 14,

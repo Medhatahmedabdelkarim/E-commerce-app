@@ -37,8 +37,14 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    HomeHeader(),
+                    HomeHeader(title: "All Products",),
                     ProductsSection(),
+                    HomeHeader(title: "Best Selling",),
+                    ProductsSection(),
+
+
+
+
                   ],
                 ),
               ),
