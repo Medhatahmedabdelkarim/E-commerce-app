@@ -30,6 +30,7 @@ import '../presentation/filters/manager/filters_bloc.dart';
 import '../presentation/home/manager/home_bloc.dart';
 import '../presentation/product_details/manager/product_details_bloc.dart';
 import '../presentation/search/manager/search_bloc.dart';
+import '../presentation/sign_in/manager/auth_bloc.dart';
 import '../services/api_services.dart';
 import '../services/local_storage.dart';
 
@@ -128,6 +129,8 @@ Future<void> ServiceLocator() async {
       loadFavoritesUseCase: sl(),
     ),
   );
+  sl.registerFactory<AuthBloc>(() => AuthBloc(sl()));
+
   sl.registerFactory<CategoriesListBloc>(
     () => CategoriesListBloc(getCategoriesUseCase: sl()),
   );

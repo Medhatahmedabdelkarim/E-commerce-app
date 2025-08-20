@@ -14,7 +14,7 @@ class _ApiService implements ApiService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://api.escuelajs.co/api/v1/';
+    baseUrl ??= 'https://ecommerce-app-production-e80c.up.railway.app/';
   }
 
   final Dio _dio;
@@ -22,6 +22,40 @@ class _ApiService implements ApiService {
   String? baseUrl;
 
   final ParseErrorLogger? errorLogger;
+
+  @override
+  Future<Map<String, dynamic>> login(Map<String, dynamic> body) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _options = _setStreamType<Map<String, dynamic>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/auth/login',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late Map<String, dynamic> _value;
+    try {
+      _value = _result.data!;
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
 
   @override
   Future<List<Product>> getProduct() async {
@@ -71,7 +105,7 @@ class _ApiService implements ApiService {
     )
         .compose(
           _dio.options,
-          'categories',
+          'categories/category',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -197,7 +231,7 @@ class _ApiService implements ApiService {
   @override
   Future<List<Product>> searchProducts(String title) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'title': title};
+    final queryParameters = <String, dynamic>{r'query': title};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<List<Product>>(Options(
@@ -207,7 +241,7 @@ class _ApiService implements ApiService {
     )
         .compose(
           _dio.options,
-          'products/',
+          'products/search',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -257,7 +291,7 @@ class _ApiService implements ApiService {
     )
         .compose(
           _dio.options,
-          'products',
+          'products/filter',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -68,14 +68,14 @@ class SearchDestScreen extends StatelessWidget {
                   ),
                 );
               }
-              final displayProducts =
-                  (state is ProductsLoaded && state.products.isNotEmpty)
-                  ? state.products
-                  : products;
-
-              return displayProducts.isEmpty
-                  ? Center(child: Text("No products found"))
-                  : SearchItemsGrid(products: displayProducts);
+              if (state is ProductsLoaded) {
+                return state.products.isEmpty
+                    ? const Center(child: Text("No products found"))
+                    : SearchItemsGrid(products: state.products);
+              }
+              return products.isEmpty
+                  ? const Center(child: Text("No products found"))
+                  : SearchItemsGrid(products: products);
             },
           ),
         ],
