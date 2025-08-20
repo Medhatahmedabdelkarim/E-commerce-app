@@ -35,14 +35,11 @@ class SortButton extends StatelessWidget {
                       return DropdownMenuItem(value: items, child: Text(items));
                     }).toList(),
                     onChanged: (value) {
-                      context.read<ProductBloc>().add(
-                        SortProductsEvent(
-                          state is ProductsLoaded && state.products.isNotEmpty
-                              ? state.products
-                              : products,
-                          value!,
-                        ),
-                      );
+                      if (state is ProductsLoaded) {
+                        context.read<ProductBloc>().add(
+                          SortProductsEvent(state.products, value!),
+                        );
+                      }
                     },
                     style: TextStyle(fontSize: 12, color: Colors.black),
                     iconSize: 10,
