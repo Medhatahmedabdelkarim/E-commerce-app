@@ -50,6 +50,7 @@ dependencies:
   dio: ^5.8.0+1
   dots_indicator: ^4.0.1
   filter_list: ^1.0.3
+  lottie: ^3.3.1
 
 
 
@@ -112,6 +113,13 @@ flutter:
      - assets/Images/jordan_Luka.jpg
      - assets/Images/Right Button.png
      - assets/Images/Heart Filled.png
+     - assets/Images/facebookIcon.jpg
+     - assets/Images/googleIcon.png
+     - assets/Images/googleIcon2.png
+     - assets/Images/facebookIcons.png
+     - assets/Images/shopping_animation.gif
+     - assets/Images/shopping cart.json
+     - assets/Images/Secure Login.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

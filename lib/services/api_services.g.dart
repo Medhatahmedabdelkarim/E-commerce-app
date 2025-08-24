@@ -14,7 +14,7 @@ class _ApiService implements ApiService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://ecommerce-app-production-e80c.up.railway.app/';
+    baseUrl ??= 'http://10.0.2.2:8000/';
   }
 
   final Dio _dio;

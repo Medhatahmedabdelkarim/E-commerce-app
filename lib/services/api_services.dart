@@ -7,7 +7,7 @@ import '../data/models/category.dart';
 
 part 'api_services.g.dart';
 
-@RestApi(baseUrl: 'https://ecommerce-app-production-e80c.up.railway.app/')
+@RestApi(baseUrl: 'http://10.0.2.2:8000/')
 abstract class ApiService {
   factory ApiService(Dio dio) {
     dio.interceptors.add(

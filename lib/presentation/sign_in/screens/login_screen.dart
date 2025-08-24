@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import '../widgets/login_form.dart';
 
@@ -28,7 +29,7 @@ class LoginScreen extends StatelessWidget{
                     image: AssetImage("assets/Images/CasaForsa.png"),
                   ),
                 ),
-                Text('Discover unmatched oppurtunities',style: Theme.of(context).textTheme.headlineMedium,),
+                Text('Discover unmatched oppurtunities',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 28),),
                 SizedBox(height: 8,),
                 Text('Be able to explore the wonders of the world',style: Theme.of(context).textTheme.bodyMedium,)
               ],
@@ -59,15 +60,36 @@ class LoginScreen extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  decoration: BoxDecoration(border:Border.all(color: Colors.grey),borderRadius: BorderRadius.circular(100)),
-                  child: IconButton(onPressed: (){},
-                      icon: Icon(Icons.signal_cellular_connected_no_internet_0_bar)),
+                  width:40,
+                  height:40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                      border: Border.all(color: Colors.grey)
+
+
+                  ),
+                  child:Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: InkWell(onTap: (){},child:Center(child:Image(image: AssetImage("assets/Images/googleIcon2.png"),fit: BoxFit.cover,)
+                      ,)),
+                  ),
+
                 ),
                 SizedBox(width: 12,),
                 Container(
-                  decoration: BoxDecoration(border:Border.all(color: Colors.grey),borderRadius: BorderRadius.circular(100)),
-                  child: IconButton(onPressed: (){},
-                      icon: Icon(Icons.signal_cellular_connected_no_internet_0_bar)),
+                  width:40,
+                  height:40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(color: Colors.grey)
+
+                  ),
+                  child:Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: InkWell(onTap: (){},child:Center(child:Image(image: AssetImage("assets/Images/facebookIcons.png"),fit: BoxFit.cover,)
+                      ,)),
+                  ),
+
                 ),
               ],
             )
